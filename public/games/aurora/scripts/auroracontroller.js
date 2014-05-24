@@ -54,7 +54,7 @@ var main = function(GameClient, Misc, MobileHacks) {
         };
 
         GameControls.prototype.attachStopEvent = function () {
-            $("#upPressed, #down, #right, #left").on( "vmouseup", function () {
+            $("#upPressed, #downPressed, #rightPressed, #leftPressed").on( "vmouseup", function () {
                 $('.arrowHover').each(function () {$(this).hide()});
                 g_client.sendCmd('stop', { speed: 0 });
             });
