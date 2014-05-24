@@ -6,11 +6,13 @@ requirejs([
     '../libs/shared/gameserver',
     '../libs/gamesupport',
     '../libs/misc',
-    './playerManager'
-], function (GameServer, GameSupport, Misc, PlayerManager) {
+    './playerManager',
+    './effects'
+], function (GameServer, GameSupport, Misc, PlayerManager, Effects) {
 
     var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update}),
-        playerManager = new PlayerManager(game),
+        vfx = new Effects(game),
+        playerManager = new PlayerManager(game, vfx),
         red;
 
     var globals = {
@@ -35,6 +37,7 @@ requirejs([
 
     function preload () {
         game.load.image('playfield', 'assets/img/playfield.png');
+        game.load.image('white', 'assets/img/white.png');
         game.load.image('red', 'assets/img/red.png');
         game.load.image('blue', 'assets/img/blue.png');
         game.load.image('exit', 'assets/img/exit.png');

@@ -3,10 +3,12 @@
 define(['./settings', './map'], function (Settings, Map) {
 
     var game,
-        map;
+        map,
+        vfx;
 
-    var PlayerManager = function (g) {
+    var PlayerManager = function (g, effects) {
         game = g;
+        vfx = effects;
         map = this.map = new Map(game);
         this.queue = [];
         this.players = {};
@@ -67,7 +69,7 @@ define(['./settings', './map'], function (Settings, Map) {
             p2 = this.queue.shift(),
             tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, 'red', tint);
+        this.setupPlayer(p1, p2, 'white', tint);
         this.setupPlayer(p2, p1, 'blue', tint);
 
         console.log(this.players);
@@ -84,7 +86,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
         this.players[p1.id] = {
             'sprite': sprite,
-            'pair': p2.id
+            'pair': p2.id,
+            'conn': p1
         };
 
         sprite.anchor.x = 0.5;
@@ -111,7 +114,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
             if (!p2) continue;
 
-            if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.DIST) {
+            if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.MERGE_DIST) {
                 p1.merged = p2.merged = true;
 
                 var merge = game.add.tween(p2.sprite);
@@ -133,6 +136,12 @@ define(['./settings', './map'], function (Settings, Map) {
 
                 map.generateExit();
             }
+        }
+
+        var winners = map.checkForWinners(this.players);
+
+        if (winners.p1 || winners.p2) {
+            console.log('WINNERS!');
         }
 
     };
