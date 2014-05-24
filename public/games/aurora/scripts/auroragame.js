@@ -41,6 +41,7 @@ requirejs([
     function create () {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         playerManager.createGroup();
+        console.log(game.physics.arcade);
     }
 
     function update () {

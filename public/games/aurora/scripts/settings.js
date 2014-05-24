@@ -2,9 +2,10 @@
 
 define(function () {
 
-	var Settings = {};
-
-	Settings.SPEED = 40;
+	var Settings = {
+		'SPEED': 40,
+		'DIST': 90
+	};
 
 	return Settings;
 
