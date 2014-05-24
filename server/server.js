@@ -484,7 +484,7 @@ for (var ii = 0; ii < ports.length; ++ii) {
     };
   }(server, port));
 
-  server.listen(port);
+  server.listen(process.env.PORT || port);
 }
 
 if (g.dns) {
