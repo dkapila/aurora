@@ -55,7 +55,7 @@ var main = function(GameClient, Misc, MobileHacks) {
         GameControls.prototype.attachStopEvent = function () {
             $("#up, #down, #right, #left").on( "vmouseup", function () {
                 console.log ("released");
-                g_client.sendCmd('move', { direction: "right", speed: 5 });
+                g_client.sendCmd('stop', { speed: 0 });
             });               
         }
 
