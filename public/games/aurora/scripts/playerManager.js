@@ -7,7 +7,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
     var PlayerManager = function (g) {
         game = g;
-        map = new Map(game);
+        map = this.map = new Map(game);
         this.queue = [];
         this.players = {};
 
@@ -97,6 +97,7 @@ define(['./settings', './map'], function (Settings, Map) {
         sprite.body.linearDamping = 1;
         sprite.body.mass = 1000;
         sprite.tint = tint;
+        sprite.z = 5;
 
         console.log(sprite);
     }
@@ -129,6 +130,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
                 merge.chain(scale);
                 merge.start();
+
+                map.generateExit();
             }
         }
 

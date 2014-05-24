@@ -34,14 +34,17 @@ requirejs([
     GameSupport.init(server, globals);
 
     function preload () {
+        game.load.image('playfield', 'assets/img/playfield.png');
         game.load.image('red', 'assets/img/red.png');
         game.load.image('blue', 'assets/img/blue.png');
+        game.load.image('exit', 'assets/img/exit.png');
     }
 
     function create () {
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.add.image(0, 0, 'playfield');
         playerManager.createGroup();
-        console.log(game.physics.arcade);
+
     }
 
     function update () {
