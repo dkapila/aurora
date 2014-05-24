@@ -17,6 +17,13 @@ var main = function(GameClient, Misc, MobileHacks) {
       console.log('Player connected!');
     });
 
+    g_client.addEventListener('winner', function (data) {
+        var winnerBackgroundColor = data.color.toString(16);
+        $('body').css("backgroundColor", "#" + winnerBackgroundColor);
+        $('body').css('background-image', 'none');
+        console.log ('You won'  + data);
+    });
+
   // Insert your controller specific code here.
     console.log("INIT CONTROLLER");
 
@@ -27,32 +34,35 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachUpEvent = function () {
             $("#up").on( "vmousedown", function () {
-                console.log ("up pressed");
+                $("#upPressed").show();
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
             });
         };
 
         GameControls.prototype.attachDownEvent = function () {
             $("#down").on( "vmousedown", function () {
+                $("#downPressed").show();
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
             });
         };
 
         GameControls.prototype.attachLeftEvent = function () {
             $("#left").on( "vmousedown", function () {
+                $("#leftPressed").show();
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
             });
         };
 
         GameControls.prototype.attachRightEvent = function () {
             $("#right").on( "vmousedown", function () {
+                $("#rightPressed").show();
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
             });
         };
 
         GameControls.prototype.attachStopEvent = function () {
-            $("#up, #down, #right, #left").on( "vmouseup", function () {
-                console.log ("released");
+            $("#upPressed, #downPressed, #rightPressed, #leftPressed").on( "vmouseup", function () {
+                $('.arrowHover').each(function () {$(this).hide()});
                 g_client.sendCmd('stop', { speed: 0 });
             });
         }
