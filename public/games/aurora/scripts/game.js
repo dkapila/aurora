@@ -5,7 +5,7 @@ define(function() {
     var game = AUR.game;
 
     AUR.Game = function () {
-
+        this.playerManager = new AUR.PlayerManager();
     }
 
     AUR.Game.prototype.preload = function () {
@@ -20,7 +20,6 @@ define(function() {
 
         game.stage.backgroundColor = 0x2d2d2d;
 
-        //  Here we'll chain 4 different tweens together and play through them all in a loop
         var tween = game.add.tween(this.red).to({ x: 600 }, 2000, Phaser.Easing.Linear.None)
         .to({ y: 300 }, 1000, Phaser.Easing.Linear.None)
         .to({ x: 100 }, 2000, Phaser.Easing.Linear.None)
@@ -35,6 +34,10 @@ define(function() {
 
     AUR.Game.prototype.update = function () {
 
+    }
+
+    AUR.Game.prototype.addPlayer = function (netPlayer) {
+        this.playerManager.addPlayer(netPlayer);
     }
 
 });
