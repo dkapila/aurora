@@ -108,6 +108,7 @@ define(['./settings', './map'], function (Settings, Map) {
         sprite.anchor.x = 0.5;
         sprite.anchor.y = 0.5;
 
+        sprite.body.setSize(46, 116 / 2, 0, 116 / 4);
         sprite.body.collideWorldBounds = true;
         sprite.body.bounce.x = 0.5;
         sprite.body.bounce.y = 0.5;
@@ -116,7 +117,6 @@ define(['./settings', './map'], function (Settings, Map) {
         sprite.body.mass = 1000;
         sprite.tint = tint;
         sprite.z = 5;
-
     }
 
     PlayerManager.prototype.update = function() {
@@ -158,6 +158,12 @@ define(['./settings', './map'], function (Settings, Map) {
             console.log('WINNERS!');
         }
 
+    };
+
+    PlayerManager.prototype.debug = function() {
+        for (var p in this.players) {
+            game.debug.body(this.players[p].sprite);
+        }
     };
 
     return PlayerManager;
