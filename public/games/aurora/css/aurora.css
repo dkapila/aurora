@@ -14,21 +14,25 @@ html, body {
   height: 50px;
 }
 #left {
-  top: 85px;
-  left: 15px;
+  background-image: url('../assets/img/leftArrow.png');
+  top: 80px;
+  left: 0px;
 }
 #right {
-  top: 85px;
-  left: 150px;
+  background-image: url('../assets/img/rightArrow.png');
+  top: 80px;
+  left: 165px;
 }
 #up {
-  top: 20px;
-  left: 85px;
+  background-image: url('../assets/img/upArrow.png');
+  top: -6px;
+  left: 80px;
 }
 
 #down {
-  top: 160px;
-  left: 85px;
+  background-image: url('../assets/img/downArrow.png');
+  top: 165px;
+  left: 80px;
 }
 
 .ui-page {
@@ -37,8 +41,8 @@ html, body {
 
 .arrow {
   position: absolute;
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
 }
 
 /* vertical and horizontal centering
