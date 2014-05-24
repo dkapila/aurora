@@ -37,7 +37,7 @@ requirejs([
 
     function preload () {
         game.stage.disableVisibilityChange = true;
-        
+
         game.load.image('playfield', 'assets/img/playfield.png');
         game.load.image('white', 'assets/img/white.png');
         game.load.image('red', 'assets/img/red.png');

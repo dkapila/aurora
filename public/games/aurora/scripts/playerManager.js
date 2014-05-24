@@ -24,8 +24,15 @@ define(['./settings', './map'], function (Settings, Map) {
         console.log('player connected');
 
         netPlayer.addEventListener('disconnect', function () {
+            var index = self.queue.indexOf(netPlayer);
+            if (index > -1) {
+                self.queue.splice(index, 1);
+            }
             netPlayer.removeAllListeners();
             var player = self.players[id];
+            console.log(self.players);
+            if (!player) return;
+
             player.left = true;
             if (self.players[player.pair].left) {
                 console.log('REMOVING PLAYERS ' + player.id + ' AND ' + player.pair);
@@ -49,7 +56,6 @@ define(['./settings', './map'], function (Settings, Map) {
             var sprite = player.sprite;
             sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
             sprite.body.velocity.y = data.y * data.speed * Settings.SPEED;
-            console.log(sprite.animations);
             sprite.animations.play('run');
         });
 
@@ -75,7 +81,7 @@ define(['./settings', './map'], function (Settings, Map) {
         this.setupPlayer(p1, p2, 'player', tint);
         this.setupPlayer(p2, p1, 'player', tint);
 
-        console.log(this.players);
+        // console.log(this.players);
     };
 
     PlayerManager.prototype.createGroup = function() {
@@ -111,7 +117,6 @@ define(['./settings', './map'], function (Settings, Map) {
         sprite.tint = tint;
         sprite.z = 5;
 
-        console.log(sprite);
     }
 
     PlayerManager.prototype.update = function() {
