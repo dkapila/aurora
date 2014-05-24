@@ -17,8 +17,6 @@ var main = function(GameClient, Misc, MobileHacks) {
       console.log('Player connected!');
     });
 
-    g_client.sendCmd('move', { x: 10, y: 20 });
-
   // Insert your controller specific code here.
     console.log("INIT CONTROLLER");
 
