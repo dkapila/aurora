@@ -115,6 +115,8 @@ define(['./settings'], function (Settings) {
                     scale.onComplete.add(function () {
                         playerToRemove.sprite.kill();
                         playerToRemove.sprite = playerToMergeWith.sprite;
+                        playerToMergeWith.sprite.scale.x = 1.5;
+                        playerToMergeWith.sprite.scale.y = 1.5;
                     });
                 }(p2, p1));
 
