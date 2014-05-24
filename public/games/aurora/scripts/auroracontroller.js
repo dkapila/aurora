@@ -28,25 +28,25 @@ var main = function(GameClient, Misc, MobileHacks) {
         GameControls.prototype.attachUpEvent = function () {
             $("#up").on( "vmousedown", function () {
                 console.log ("up pressed");
-                g_client.sendCmd('move', { direction: "up", speed: 5 });
+                g_client.sendCmd('move', { x: 0, y: 1, speed: 5 });
             });
         };
 
         GameControls.prototype.attachDownEvent = function () {
             $("#down").on( "vmousedown", function () {
-                g_client.sendCmd('move', { direction: "down", speed: 5 });
+                g_client.sendCmd('move', {x: 0, y: -1, speed: 5 });
             });        
         };
 
         GameControls.prototype.attachLeftEvent = function () {
             $("#left").on( "vmousedown", function () {
-                g_client.sendCmd('move', { direction: "left", speed: 5 });
+                g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
             });  
         };
 
         GameControls.prototype.attachRightEvent = function () {
             $("#right").on( "vmousedown", function () {
-                g_client.sendCmd('move', { direction: "right", speed: 5 });
+                g_client.sendCmd('move', {x: 1, y: 0, peed: 5 });
             });   
         };
 
