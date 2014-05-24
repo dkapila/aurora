@@ -8,7 +8,7 @@ define(['./settings'], function (Settings) {
         if (game.rnd.frac() > 0.5 ){
             return game.rnd.integerInRange(0, Settings.MARGIN);
         } else {
-            return game.rnd.integerInRange(max - Settings.MARGIN, max);
+            return game.rnd.integerInRange(max - Settings.MARGIN, max - 10);
         }
     }
 
@@ -19,7 +19,24 @@ define(['./settings'], function (Settings) {
     Map.prototype.generateExit = function() {
         if (this.exit) return;
         this.exit = game.add.sprite(positionExit(game.world.width), positionExit(game.world.height), 'exit');
-        console.log('position:', this.exit.x, this.exit.y);
+        this.exit.anchor.x = 0.5;
+        this.exit.anchor.y = 0.5;
+    };
+
+    Map.prototype.checkForWinners = function(players) {
+        for (var p in players) {
+            var p1 = players[p],
+                p2 = players[p1.pair];
+
+            if (p1.merged && game.physics.arcade.distanceBetween(p1.sprite, this.exit) < Settings.WIN_DIST) {
+                return {
+                    'p1': p1,
+                    'p2': p2
+                };
+            }
+        }
+
+        return {};
     };
 
     return Map;

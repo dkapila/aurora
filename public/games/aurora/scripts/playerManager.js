@@ -3,10 +3,12 @@
 define(['./settings', './map'], function (Settings, Map) {
 
     var game,
-        map;
+        map,
+        vfx;
 
-    var PlayerManager = function (g) {
+    var PlayerManager = function (g, effects) {
         game = g;
+        vfx = effects;
         map = this.map = new Map(game);
         this.queue = [];
         this.players = {};
@@ -111,7 +113,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
             if (!p2) continue;
 
-            if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.DIST) {
+            if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.MERGE_DIST) {
                 p1.merged = p2.merged = true;
 
                 var merge = game.add.tween(p2.sprite);
@@ -133,6 +135,12 @@ define(['./settings', './map'], function (Settings, Map) {
 
                 map.generateExit();
             }
+        }
+
+        var winners = map.checkForWinners(this.players);
+
+        if (winners.p1 || winners.p2) {
+            console.log('WINNERS!');
         }
 
     };

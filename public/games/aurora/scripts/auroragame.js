@@ -6,11 +6,13 @@ requirejs([
     '../libs/shared/gameserver',
     '../libs/gamesupport',
     '../libs/misc',
-    './playerManager'
-], function (GameServer, GameSupport, Misc, PlayerManager) {
+    './playerManager',
+    './effects'
+], function (GameServer, GameSupport, Misc, PlayerManager, Effects) {
 
     var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update}),
-        playerManager = new PlayerManager(game),
+        vfx = new Effects(game),
+        playerManager = new PlayerManager(game, vfx),
         red;
 
     var globals = {
