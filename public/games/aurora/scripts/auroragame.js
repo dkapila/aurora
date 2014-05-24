@@ -37,6 +37,7 @@ requirejs([
 
     function preload () {
         game.load.image('playfield', 'assets/img/playfield.png');
+        game.load.image('white', 'assets/img/white.png');
         game.load.image('red', 'assets/img/red.png');
         game.load.image('blue', 'assets/img/blue.png');
         game.load.image('exit', 'assets/img/exit.png');

@@ -69,7 +69,7 @@ define(['./settings', './map'], function (Settings, Map) {
             p2 = this.queue.shift(),
             tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, 'red', tint);
+        this.setupPlayer(p1, p2, 'white', tint);
         this.setupPlayer(p2, p1, 'blue', tint);
 
         console.log(this.players);
@@ -86,7 +86,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
         this.players[p1.id] = {
             'sprite': sprite,
-            'pair': p2.id
+            'pair': p2.id,
+            'conn': p1
         };
 
         sprite.anchor.x = 0.5;
