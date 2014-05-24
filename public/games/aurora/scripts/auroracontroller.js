@@ -27,36 +27,44 @@ var main = function(GameClient, Misc, MobileHacks) {
         function GameControls() {
         }
 
-        GameControls.prototype.attachUpClick = function () {
-            $("#up").click (function () {
-                console.log ("up clicked");
+        GameControls.prototype.attachUpEvent = function () {
+            $("#up").on( "vmousedown", function () {
+                console.log ("up pressed");
                 g_client.sendCmd('move', { direction: "up", speed: 5 });
             });
         };
 
-        GameControls.prototype.attachDownClick = function () {
-            $("#down").click (function () {
+        GameControls.prototype.attachDownEvent = function () {
+            $("#down").on( "vmousedown", function () {
                 g_client.sendCmd('move', { direction: "down", speed: 5 });
             });        
         };
 
-        GameControls.prototype.attachLeftClick = function () {
-            $("#left").click (function () {
+        GameControls.prototype.attachLeftEvent = function () {
+            $("#left").on( "vmousedown", function () {
                 g_client.sendCmd('move', { direction: "left", speed: 5 });
             });  
         };
 
-        GameControls.prototype.attachRightClick = function () {
-            $("#right").click (function () {
+        GameControls.prototype.attachRightEvent = function () {
+            $("#right").on( "vmousedown", function () {
                 g_client.sendCmd('move', { direction: "right", speed: 5 });
             });   
         };
 
+        GameControls.prototype.attachStopEvent = function () {
+            $("#up, #down, #right, #left").on( "vmouseup", function () {
+                console.log ("released");
+                g_client.sendCmd('move', { direction: "right", speed: 5 });
+            });               
+        }
+
         GameControls.prototype.start = function () {
-            this.attachUpClick();
-            this.attachDownClick();
-            this.attachLeftClick();
-            this.attachRightClick();
+            this.attachUpEvent();
+            this.attachDownEvent();
+            this.attachLeftEvent();
+            this.attachRightEvent();
+            this.attachStopEvent();
         };
         return GameControls;
     })();
