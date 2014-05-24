@@ -6,9 +6,9 @@ define(['./settings'], function (Settings) {
 
     function positionExit(max) {
         if (game.rnd.frac() > 0.5 ){
-            return game.rnd.integerInRange(0, Settings.MARGIN);
+            return game.rnd.integerInRange(Settings.INNER_MARGIN, Settings.OUTER_MARGIN);
         } else {
-            return game.rnd.integerInRange(max - Settings.MARGIN, max - 10);
+            return game.rnd.integerInRange(max - Settings.INNER_MARGIN, max - Settings.OUTER_MARGIN);
         }
     }
 
@@ -18,7 +18,9 @@ define(['./settings'], function (Settings) {
 
     Map.prototype.generateExit = function() {
         if (this.exit) return;
-        this.exit = game.add.sprite(positionExit(game.world.width), positionExit(game.world.height), 'exit');
+        this.exit = game.add.sprite(positionExit(game.world.width), positionExit(game.world.height), 'spritesheet', 'portal0001-idle.png');
+        game.add.tween(this.exit.scale).to({ 'x': 1.5, 'y': 1.5 }, 500, Phaser.Easing.Cubic.In, true, 0, 1000, true);
+
         this.exit.anchor.x = 0.5;
         this.exit.anchor.y = 0.5;
     };

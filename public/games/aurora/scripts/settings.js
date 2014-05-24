@@ -5,8 +5,9 @@ define(function () {
 	var Settings = {
 		'SPEED': 40,
 		'MERGE_DIST': 90,
-		'WIN_DIST': 90,
-		'MARGIN': 60,
+		'WIN_DIST': 30,
+		'INNER_MARGIN': 40,
+		'OUTER_MARGIN': 80,
 		'COLOR_RANGE': {
 			'START': 0,
 			'END': 16777215

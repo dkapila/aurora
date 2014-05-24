@@ -89,6 +89,8 @@ define(['./settings', './map'], function (Settings, Map) {
     };
 
     PlayerManager.prototype.setupPlayer = function (p1, p2, sprite, tint) {
+        if (!this.sprites) return;
+
         var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
 
         // animation
@@ -165,6 +167,7 @@ define(['./settings', './map'], function (Settings, Map) {
         for (var p in this.players) {
             game.debug.body(this.players[p].sprite);
         }
+
     };
 
     return PlayerManager;
