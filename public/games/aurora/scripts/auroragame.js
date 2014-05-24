@@ -41,6 +41,7 @@ requirejs([
         game.load.image('red', 'assets/img/red.png');
         game.load.image('blue', 'assets/img/blue.png');
         game.load.image('exit', 'assets/img/exit.png');
+        game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
     }
 
     function create () {

@@ -49,6 +49,8 @@ define(['./settings', './map'], function (Settings, Map) {
             var sprite = player.sprite;
             sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
             sprite.body.velocity.y = data.y * data.speed * Settings.SPEED;
+            console.log(sprite.animations);
+            sprite.animations.play('run');
         });
 
         netPlayer.addEventListener('stop', function (data) {
@@ -59,6 +61,7 @@ define(['./settings', './map'], function (Settings, Map) {
             var sprite = player.sprite;
             sprite.body.velocity.x = 0;
             sprite.body.velocity.y = 0;
+            sprite.animations.play('idle');
         });
 
         if (this.queue.length < 2) {
@@ -69,8 +72,8 @@ define(['./settings', './map'], function (Settings, Map) {
             p2 = this.queue.shift(),
             tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, 'white', tint);
-        this.setupPlayer(p2, p1, 'blue', tint);
+        this.setupPlayer(p1, p2, 'player', tint);
+        this.setupPlayer(p2, p1, 'player', tint);
 
         console.log(this.players);
     };
@@ -80,7 +83,13 @@ define(['./settings', './map'], function (Settings, Map) {
     };
 
     PlayerManager.prototype.setupPlayer = function (p1, p2, sprite, tint) {
-        var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), sprite);
+        var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
+
+        // animation
+        sprite.animations.add('idle', Phaser.Animation.generateFrameNames('player', 1, 4, '-idle.png', 4), 7, true);
+        sprite.animations.add('run', Phaser.Animation.generateFrameNames('player', 1, 4, '-run.png', 4), 7, true);
+        sprite.animations.play('idle');
+
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
         sprite.body.collideWorldBounds = true;
 
