@@ -1,54 +1,65 @@
 html, body {
-  background-color: #A7A6DD;
+  background-image: url('../assets/img/background.png');
+  overflow: hidden;
+  background-repeat:no-repeat;
+  -webkit-background-size: cover; /* For WebKit*/
+  -moz-background-size: cover;    /* Mozilla*/
+  -o-background-size: cover;      /* Opera*/
+  background-size: cover;  
+  height: 100%;
 }
-#buttons {
-  position: absolute;
 
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}
-.button {
-  color: #000;
-  width: 110px;
-  height: 110px;
-  text-align: center;
-  font-size: 70px;
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  bottom: 60px;
-  position: absolute;
+.arrow {
+  width: 50px;
+  height: 50px;
 }
 #left {
-  top: 160px;
-  left: 20px;
+  top: 85px;
+  left: 15px;
 }
 #right {
-  top: 161px;
-  left: 140px;
-  font-size: 60px;
+  top: 85px;
+  left: 150px;
 }
 #up {
-  top: 100px;
-  left: 80px;
+  top: 20px;
+  left: 85px;
 }
 
 #down {
-  top: 206px;
-  left: 80px;
+  top: 160px;
+  left: 85px;
 }
 
-/* Spinning, gradient circle; CSS only! */
-#gamePad {
-  width: 150px;
-  height: 150px;
-  
+.ui-page {
+  height: 100%;
+}
+
+.arrow {
   position: absolute;
-  left: 400px;
-  top: 120px;
-  border-radius: 50%;
-  background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
-  background-image: -webkit-radial-gradient(45px 45px, circle cover, rgb(69, 102, 130), rgb(0, 54, 255));
-  background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+  height: 80px;
+  width: 80px;
+}
+#outerGamePad {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#gamePadWheel {
+  position: relative;
+  max-width: 50%;
+}
+
+.hft-instruction {
+  display: none;
+}
+
+.hft-portrait {
+  display: none;
+}
+
+.ui-loader {
+  display: none;
 }
