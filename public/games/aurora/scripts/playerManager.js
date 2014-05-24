@@ -1,11 +1,13 @@
 "use strict";
 
-define(['./settings'], function (Settings) {
+define(['./settings', './map'], function (Settings, Map) {
 
-    var game;
+    var game,
+        map;
 
     var PlayerManager = function (g) {
         game = g;
+        map = new Map(game);
         this.queue = [];
         this.players = {};
 
@@ -62,10 +64,11 @@ define(['./settings'], function (Settings) {
         }
 
         var p1 = this.queue.shift(),
-            p2 = this.queue.shift();
+            p2 = this.queue.shift(),
+            tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, 'red');
-        this.setupPlayer(p2, p1, 'blue');
+        this.setupPlayer(p1, p2, 'red', tint);
+        this.setupPlayer(p2, p1, 'blue', tint);
 
         console.log(this.players);
     };
@@ -74,11 +77,10 @@ define(['./settings'], function (Settings) {
         this.sprites = game.add.group();
     };
 
-    PlayerManager.prototype.setupPlayer = function (p1, p2, sprite) {
-        var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.centerX), game.rnd.integerInRange(0, game.world.centerY), sprite);
+    PlayerManager.prototype.setupPlayer = function (p1, p2, sprite, tint) {
+        var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), sprite);
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
         sprite.body.collideWorldBounds = true;
-        console.log(sprite.body);
 
         this.players[p1.id] = {
             'sprite': sprite,
@@ -94,6 +96,9 @@ define(['./settings'], function (Settings) {
         sprite.body.minBounceVelocity = 0;
         sprite.body.linearDamping = 1;
         sprite.body.mass = 1000;
+        sprite.tint = tint;
+
+        console.log(sprite);
     }
 
     PlayerManager.prototype.update = function() {
@@ -102,6 +107,8 @@ define(['./settings'], function (Settings) {
         for (var p in this.players) {
             var p1 = this.players[p],
                 p2 = this.players[p1.pair];
+
+            if (!p2) continue;
 
             if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.DIST) {
                 p1.merged = p2.merged = true;
