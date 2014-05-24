@@ -31,13 +31,10 @@ define(function() {
 
         game.add.tween(this.red).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
-        // fullscreen
-        // game.scale.fullScreenScaleMode = Phaser.StageScaleMode.SHOW_ALL;
-        // game.scale.startFullScreen();
-
     }
 
     AUR.Game.prototype.update = function () {
+
     }
 
 });
