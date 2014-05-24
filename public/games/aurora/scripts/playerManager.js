@@ -27,6 +27,10 @@ define(function () {
 	    	console.log(data);
 	    });
 
+		netPlayer.addEventListener('stop', function (data) {
+	    	console.log(data);
+	    });
+
     };
 
     return PlayerManager;
