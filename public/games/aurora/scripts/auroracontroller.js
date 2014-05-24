@@ -21,6 +21,7 @@ var main = function(GameClient, Misc, MobileHacks) {
         var winnerBackgroundColor = data.color.toString(16);
         $('body').css("backgroundColor", "#" + winnerBackgroundColor);
         $('body').css('background-image', 'none');
+        document.getElementById("audioControl").play();
         console.log ('You won'  + data);
     });
 
