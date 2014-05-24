@@ -23,6 +23,10 @@ define(function () {
 	        delete self.players[netPlayer.id];
 	    });
 
+	    netPlayer.addEventListener('move', function (data) {
+	    	console.log(data);
+	    });
+
     };
 
     return PlayerManager;
