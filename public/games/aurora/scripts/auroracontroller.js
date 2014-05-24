@@ -17,6 +17,13 @@ var main = function(GameClient, Misc, MobileHacks) {
       console.log('Player connected!');
     });
 
+    g_client.addEventListener('winner', function (data) {
+        var winnerBackgroundColor = data.color.toString(16);
+        $('body').css("backgroundColor", "#" + winnerBackgroundColor);
+        $('body').css('background-image', 'none');
+        console.log ('You won'  + data);
+    });
+
   // Insert your controller specific code here.
     console.log("INIT CONTROLLER");
 
