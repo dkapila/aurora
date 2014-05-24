@@ -46,6 +46,9 @@ define(['./settings'], function (Settings) {
 
 		netPlayer.addEventListener('stop', function (data) {
 	    	console.log('stop: ' + JSON.stringify(data));
+	    	var sprite = self.players[netPlayer.id].sprite;
+	    	sprite.body.velocity.x = 0;
+	    	sprite.body.velocity.y = 0;
 	    });
 
     	if (this.queue.length < 2) {
@@ -80,7 +83,8 @@ define(['./settings'], function (Settings) {
 		sprite.body.bounce.x = 0.5;
 		sprite.body.bounce.y = 0.5;
 		sprite.body.minBounceVelocity = 0;
-		sprite.body.mass = 100;
+		sprite.body.linearDamping = 1;
+		sprite.body.mass = 1000;
 	}
 
 	PlayerManager.prototype.update = function() {
