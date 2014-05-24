@@ -32,11 +32,6 @@ requirejs([
         playerManager.add(netPlayer);
     });
 
-    server.addEventListener('disconnect', function (netPlayer) {
-        console.log('player disconnected');
-        playerManager.remove(netPlayer);
-    });
-
     GameSupport.init(server, globals);
 
     function preload () {
