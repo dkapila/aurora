@@ -9,10 +9,6 @@ html, body {
   height: 100%;
 }
 
-.arrow {
-  width: 50px;
-  height: 50px;
-}
 #left {
   background-image: url('../assets/img/leftArrow.png');
   top: 80px;
@@ -28,9 +24,38 @@ html, body {
   top: -6px;
   left: 80px;
 }
-
 #down {
   background-image: url('../assets/img/downArrow.png');
+  top: 165px;
+  left: 80px;
+}
+
+.arrowHover {
+  width: 90px;
+  height: 90px;
+  z-index: 10;
+  position: absolute;
+  display: none;
+}
+
+#leftPressed {
+  background-image: url('../assets/img/leftArrowPressed.png');
+  top: 80px;
+  left: 0px;
+}
+#rightPressed {
+  background-image: url('../assets/img/rightArrowPressed.png');
+  top: 80px;
+  left: 165px;
+}
+#upPressed {
+  background-image: url('../assets/img/upArrowPressed.png');
+  top: -6px;
+  left: 80px;
+}
+
+#downPressed {
+  background-image: url('../assets/img/downArrowPressed.png');
   top: 165px;
   left: 80px;
 }

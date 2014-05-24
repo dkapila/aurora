@@ -27,40 +27,35 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachUpEvent = function () {
             $("#up").on( "vmousedown", function () {
-                console.log ("up pressed");
-                var imageUrl = "assets/img/upArrowPressed.png";
-                $(this).css({backgroundImage : 'url(' + imageUrl + ')'});
+                $("#upPressed").show();
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
             });
         };
 
         GameControls.prototype.attachDownEvent = function () {
             $("#down").on( "vmousedown", function () {
-                var imageUrl = "assets/img/downArrowPressed.png";
-                $(this).css({backgroundImage : 'url(' + imageUrl + ')'});
+                $("#downPressed").show();
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
             });
         };
 
         GameControls.prototype.attachLeftEvent = function () {
             $("#left").on( "vmousedown", function () {
-                var imageUrl = "assets/img/leftArrowPressed.png";
-                $(this).css({backgroundImage : 'url(' + imageUrl + ')'});
+                $("#leftPressed").show();
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
             });
         };
 
         GameControls.prototype.attachRightEvent = function () {
             $("#right").on( "vmousedown", function () {
-                var imageUrl = "assets/img/rightArrowPressed.png";
-                $(this).css({backgroundImage : 'url(' + imageUrl + ')'});
+                $("#rightPressed").show();
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
             });
         };
 
         GameControls.prototype.attachStopEvent = function () {
-            $("#up, #down, #right, #left").on( "vmouseup", function () {
-                $(this).css({backgroundImage : 'url(' + $(this).data('img') + ')'});
+            $("#upPressed, #down, #right, #left").on( "vmouseup", function () {
+                $('.arrowHover').each(function () {$(this).hide()});
                 g_client.sendCmd('stop', { speed: 0 });
             });
         }
