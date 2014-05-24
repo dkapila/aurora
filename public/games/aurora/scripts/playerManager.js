@@ -1,6 +1,6 @@
 "use strict";
 
-define(function () {
+define(['./settings'], function (Settings) {
 
 	var game;
 
@@ -8,6 +8,7 @@ define(function () {
     	game = g;
         this.queue = [];
         this.players = {};
+
     }
 
     PlayerManager.prototype.add = function(netPlayer) {
@@ -38,6 +39,9 @@ define(function () {
 
 	    netPlayer.addEventListener('move', function (data) {
 	    	console.log('move: ' + JSON.stringify(data));
+	    	var sprite = self.players[netPlayer.id].sprite;
+	    	sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
+	    	sprite.body.velocity.y = data.y * data.speed * Settings.SPEED;
 	    });
 
 		netPlayer.addEventListener('stop', function (data) {
@@ -51,18 +55,37 @@ define(function () {
     	var p1 = this.queue.shift(),
     		p2 = this.queue.shift();
 
-    	this.players[p1.id] = {
-	    	'sprite': game.add.sprite(game.rnd.integerInRange(0, game.world.centerX), game.rnd.integerInRange(0, game.world.centerY), 'red'),
-	    	'pair': p2.id
-    	};
-
-    	this.players[p2.id] = {
-	    	'sprite': game.add.sprite(game.rnd.integerInRange(0, game.world.centerX), game.rnd.integerInRange(0, game.world.centerY), 'blue'),
-	    	'pair': p1.id
-    	};
+    	this.setupPlayer(p1, p2, 'red');
+    	this.setupPlayer(p2, p1, 'blue');
 
     	console.log(this.players);
     };
+
+    PlayerManager.prototype.createGroup = function() {
+    	this.sprites = game.add.group();
+    };
+
+    PlayerManager.prototype.setupPlayer = function (p1, p2, sprite) {
+    	var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.centerX), game.rnd.integerInRange(0, game.world.centerY), sprite);
+		game.physics.enable(sprite, Phaser.Physics.ARCADE);
+		sprite.body.collideWorldBounds = true;
+		console.log(sprite.body);
+
+    	this.players[p1.id] = {
+	    	'sprite': sprite,
+	    	'pair': p2.id
+    	};
+
+    	sprite.body.collideWorldBounds = true;
+		sprite.body.bounce.x = 0.5;
+		sprite.body.bounce.y = 0.5;
+		sprite.body.minBounceVelocity = 0;
+		sprite.body.mass = 100;
+	}
+
+	PlayerManager.prototype.update = function() {
+		game.physics.arcade.collide(this.sprites);
+	};
 
     return PlayerManager;
 

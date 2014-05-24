@@ -39,11 +39,12 @@ requirejs([
     }
 
     function create () {
-
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        playerManager.createGroup();
     }
 
     function update () {
-
+        playerManager.update();
     }
 
 });
