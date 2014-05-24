@@ -39,8 +39,16 @@ html, body {
   left: 80px;
 }
 
-@media screen and (orientation: landscape) {
-    body { 
-      background: black;
-    }
+/* Spinning, gradient circle; CSS only! */
+#gamePad {
+  width: 150px;
+  height: 150px;
+  
+  position: absolute;
+  left: 400px;
+  top: 120px;
+  border-radius: 50%;
+  background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
+  background-image: -webkit-radial-gradient(45px 45px, circle cover, rgb(69, 102, 130), rgb(0, 54, 255));
+  background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, orange 100%, red 95%);
 }
