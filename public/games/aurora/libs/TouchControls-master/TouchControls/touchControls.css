@@ -1,0 +1,109 @@
+﻿/************ Slide button ******************/
+.touch-slideButtonBox {
+    margin: 25px;
+    width: 50px;
+}
+
+    .touch-slideButtonBox .touch-slideButtonLabel {
+        font-size: 9pt;
+        text-align: center;
+        height: 5px;
+    }
+
+    .touch-slideButtonBox .touch-slideButton {
+        margin: 5px;
+        border-bottom-left-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        width: 41px;
+        height: 41px;
+        min-width: 0px;
+        font-family: 'Segoe UI Symbol';
+        text-align: center;
+        font-size: 14pt;
+        padding: 0px;
+        vertical-align: baseline;
+    }
+
+        .touch-slideButtonBox .touch-slideButton.touch-commit {
+            color: white;
+            background-color: red;
+            border-color: red;
+        }
+
+        .touch-slideButtonBox .touch-slideButton.touch-toggleOn {
+            color: black;
+            background-color: white;
+            border-color: white;
+        }
+
+/*************** Pull to refresh *******************/
+
+.touch-outer {
+    overflow-y: auto;
+    width: auto;
+    height: 100%;
+    -ms-scroll-snap-y: mandatory snapList(80px);
+    -ms-overflow-style: none;
+}
+
+    .touch-outer.touch-loading {
+        -ms-scroll-snap-y: proximity snapList(80px);
+    }
+
+.touch-inner {
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.touch-pullBox {
+    width: auto;
+    height: 80px;
+    font-size: 20pt;
+    font-family: 'Segoe UI Light';
+    display: -ms-grid;
+    -ms-grid-rows: 80px;
+    -ms-grid-columns: 45px 1fr;
+}
+
+progress.touch-pullProgress {
+    -ms-grid-column: 1;
+    -ms-grid-row-align: center;
+    -ms-grid-column-align: center;
+    opacity: 0;
+    width: 35px;
+    height: 35px;
+    color: black;
+}
+
+.touch-loading .touch-pullProgress {
+    transition: opacity ease 0.3s;
+    opacity: 1;
+}
+
+.touch-pullArrow {
+    -ms-grid-row-align: center;
+    -ms-grid-column: 1;
+    font-family: 'Segoe UI Symbol';
+    z-index: -1;
+    transform-origin: center center;
+    transform: rotate(90deg);
+    width: 45px;
+    height: 45px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('/TouchControls/arrow-dark.svg');
+}
+
+.touch-loading .touch-pullArrow {
+    opacity: 0;
+}
+
+.touch-pullLabel {
+    -ms-grid-row-align: center;
+    -ms-grid-column: 2;
+    margin-left: 10px;
+}
