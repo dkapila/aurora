@@ -51,7 +51,7 @@ define(['./settings', './map'], function (Settings, Map) {
         netPlayer.addEventListener('move', function (data) {
             // console.log('move: ' + JSON.stringify(data));
             var player = self.players[netPlayer.id];
-            if (!player) return;
+            if (!player || player.winner) return;
 
             var sprite = player.sprite;
             sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
@@ -155,6 +155,7 @@ define(['./settings', './map'], function (Settings, Map) {
         var winners = map.checkForWinners(this.players);
 
         if (winners.p1 || winners.p2) {
+            vfx.winners(p1, p2);
             console.log('WINNERS!');
         }
 
