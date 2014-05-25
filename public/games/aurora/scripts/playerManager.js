@@ -8,6 +8,13 @@ define(['./settings', './map'], function (Settings, Map) {
         sound,
         nbText;
 
+    var spawns = [
+        [100, 100],
+        // [50, Settings.HEIGHT - 50],
+        // [Settings.WIDTH, 50],
+        [Settings.WIDTH - 100, Settings.HEIGHT - 100]
+    ];
+
     var PlayerManager = function (g, effects, s) {
         game = g;
         vfx = effects;
@@ -95,8 +102,8 @@ define(['./settings', './map'], function (Settings, Map) {
             p2 = this.queue.shift(),
             tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, tint);
-        this.setupPlayer(p2, p1, tint);
+        this.setupPlayer(p1, p2, tint, spawns[0]);
+        this.setupPlayer(p2, p1, tint, spawns[1]);
 
         // console.log(this.players);
     };
@@ -109,10 +116,11 @@ define(['./settings', './map'], function (Settings, Map) {
         this.sprites.setAll('alpha', enable ? 1 : 0);
     };
 
-    PlayerManager.prototype.setupPlayer = function (p1, p2, tint) {
+    PlayerManager.prototype.setupPlayer = function (p1, p2, tint, pos) {
         if (!this.sprites) return;
 
-        var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
+        // var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
+        var sprite = this.sprites.create(game.rnd.integerInRange(pos[0] - 50, pos[0] + 50), game.rnd.integerInRange(pos[1] - 50, pos[1] + 50), 'spritesheet', 'player0001-idle.png');
 
         // animation
         sprite.animations.add('idle', Phaser.Animation.generateFrameNames('player', 1, 4, '-idle.png', 4), 7, true);
