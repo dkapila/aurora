@@ -4,6 +4,7 @@ var main = function(GameClient, Misc, MobileHacks) {
     var g_client;
     var Game = (function () {
       function Game (gameControls, sound) {
+        this.sound = sound;
         this.gameControls = gameControls;
         this.gameControls.sound = sound;
         this.speechRecognition = null;
@@ -29,7 +30,7 @@ var main = function(GameClient, Misc, MobileHacks) {
           $('body').css('background-image', 'none');
           $("#outerGamePad").hide();
           $("#victoryPannel").show();
-          sound.startSound("assets/winning.mp3", true);
+          new Sound().startSound("assets/winning.mp3", true);
       }
 
       Game.prototype.start = function () {
