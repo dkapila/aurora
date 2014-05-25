@@ -12,9 +12,8 @@ function Sound () {
 Sound.prototype.playSound = function (audioBuffer, repeat) {
     var gainNode = context.createGain();
     gainNode.connect(context.destination);
-
-    var source = null;
-    source = context.createBufferSource();
+    gainNode.gain.value = 0.5;
+    var source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(gainNode);
     source.loop = repeat;
