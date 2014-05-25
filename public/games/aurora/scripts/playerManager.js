@@ -37,6 +37,7 @@ define(['./settings', './map'], function (Settings, Map) {
         console.log('player connected');
 
         netPlayer.addEventListener('disconnect', function () {
+            console.log('player disconnected');
             var index = self.queue.indexOf(netPlayer);
             if (index > -1) {
                 self.queue.splice(index, 1);
@@ -158,6 +159,8 @@ define(['./settings', './map'], function (Settings, Map) {
             if (p && p.pair != second.pid) sound.play('hit0' + game.rnd.integerInRange(2, 4));
         }, null, this);
 
+        if (AUR.state != 'PLAY') return;
+
         for (var p in this.players) {
             var p1 = this.players[p],
                 p2 = this.players[p1.pair];
@@ -195,7 +198,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
         if (winners.p1 || winners.p2) {
             AUR.state = 'END';
-            vfx.winners(p1, p2);
+            vfx.winners(winners.p1, winners.p2);
             this.sprites.setAll('body.velocity.x', 0);
             this.sprites.setAll('body.velocity.y', 0);
         }
