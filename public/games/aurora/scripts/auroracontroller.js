@@ -23,7 +23,7 @@ var main = function(GameClient, Misc, MobileHacks) {
           g_client.addEventListener(listner, callback);
       } 
 
-      Game.prototype.end = function () {
+      Game.prototype.end = function (data) {
           var winnerBackgroundColor = data.color.toString(16);
           $('body').css("backgroundColor", "#" + winnerBackgroundColor);
           $('body').css('background-image', 'none');
