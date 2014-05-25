@@ -134,11 +134,6 @@ var main = function(GameClient, Misc, MobileHacks) {
                   g_client.sendCmd('move', { x: 1, y: 0, speed: 5 });
                   _self.currentAction = "right";
                 }
-
-           //     $('.arrowHover').each(function () {$(this).hide()});
-
-
-                //g_client.sendCmd('stop', { speed: 0 });
             });
         }
 
