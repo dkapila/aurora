@@ -2,36 +2,52 @@
 
 var main = function(GameClient, Misc, MobileHacks) {
     var g_client;
+    var Game = (function () {
+      function Game (gameControls) {
+        this.gameControls = gameControls;
+      }
 
-    var globals = {
-        debug: false,
-    };
-    Misc.applyUrlSettings(globals);
-    MobileHacks.fixHeightHack();
+      Game.prototype.initialize = function () {
+          this.gameControls.attachGameControls();
+          var globals = {
+              debug: false,
+          };
 
-    g_client = new GameClient({
-        gameId: "aurora",
-    });
+          Misc.applyUrlSettings(globals);
+          MobileHacks.fixHeightHack();        
+      }
+      
+      Game.prototype.addListner = function (listner, callback) {
+          g_client.addEventListener(listner, callback);
+      } 
 
-    g_client.addEventListener('connect', function() {
-      console.log('Player connected!');
-    });
+      Game.prototype.end = function () {
+          var winnerBackgroundColor = data.color.toString(16);
+          $('body').css("backgroundColor", "#" + winnerBackgroundColor);
+          $('body').css('background-image', 'none');
+          $("#outerGamePad").hide();
+          $("#victoryPannel").show();      
+          var sound = new Sound();
+          sound.startSound("assets/horse.ogg");
+      }
 
-    g_client.addEventListener('winner', function (data) {
-        var winnerBackgroundColor = data.color.toString(16);
-        $('body').css("backgroundColor", "#" + winnerBackgroundColor);
-        $('body').css('background-image', 'none');
-        $("#outerGamePad").hide();
-        $("#victoryPannel").show();
-        playVictorySound();      
-    });
+      Game.prototype.start = function () {
+        this.initialize();
 
+        g_client = new GameClient({
+            gameId: "aurora",
+        });
 
-    /* code from http://docs.webplatform.org/wiki/tutorials/intro_web_audio_api_1 */
-    function playVictorySound () {
-        var sound = new Sound();
-        sound.startSound("assets/horse.ogg");
-    }
+        this.addListner ('connect', function () {
+          $("#loadingPannel").fadeOut();
+          $("#gamePadWheel").fadeIn();
+          console.log ("player connected");
+        });
+
+        this.addListner('winner', this.end);
+      }
+      return Game;
+    })();
 
     var GameControls = (function () {
         function GameControls() {
@@ -72,7 +88,7 @@ var main = function(GameClient, Misc, MobileHacks) {
             });
         }
 
-        GameControls.prototype.start = function () {
+        GameControls.prototype.attachGameControls = function () {
             this.attachUpEvent();
             this.attachDownEvent();
             this.attachLeftEvent();
@@ -82,8 +98,8 @@ var main = function(GameClient, Misc, MobileHacks) {
         return GameControls;
     })();
 
-    var gameControls = new GameControls();
-    gameControls.start();
+    var game = new Game(new GameControls());
+    game.start();
 };
 
 // Start the main app logic.
