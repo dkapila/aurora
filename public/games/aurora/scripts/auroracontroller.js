@@ -29,7 +29,8 @@ var main = function(GameClient, Misc, MobileHacks) {
           $('body').css("backgroundColor", "#" + winnerBackgroundColor);
           $('body').css('background-image', 'none');
           $("#outerGamePad").hide();
-          $("#victoryPannel").show();
+          var victoryPannel = document.getElementById("victoryPannel");
+          victoryPannel.style.display = "flex";
           new Sound().startSound("assets/winning.mp3", true);
       }
 
