@@ -54,7 +54,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
     var GameControls = (function () {
         function GameControls() {
-          var lastAction = null;
+          var currentAction = null;
         }
 
         GameControls.prototype.attachUpEvent = function () {
@@ -64,7 +64,7 @@ var main = function(GameClient, Misc, MobileHacks) {
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
 
-                _self.lastAction = "up";
+                _self.currentAction = "up";
             });
         };
 
@@ -75,7 +75,7 @@ var main = function(GameClient, Misc, MobileHacks) {
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
 
-                _self.lastAction = "down";
+                _self.currentAction = "down";
             });
         };
 
@@ -86,7 +86,7 @@ var main = function(GameClient, Misc, MobileHacks) {
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
 
-                _self.lastAction = "left";
+                _self.currentAction = "left";
             });
         };
 
@@ -97,20 +97,48 @@ var main = function(GameClient, Misc, MobileHacks) {
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
 
-                _self.lastAction = "right";
+                _self.currentAction = "right";
             });
         };
 
         GameControls.prototype.attachStopEvent = function () {
+            var _self = this;
             $("#outerGamePad").on( "touchend vmouseup", function (event) {
                 $("#" + event.target.id + "Pressed").hide();
                 if (event.target.id.slice(-7) === "Pressed") {
                     $("#" + event.target.id).hide();
                 }
+
+                if (_self.currentAction === event.target.id.slice(-7) ||
+                  _self.currentAction === event.target.id) {
+                  g_client.sendCmd('stop', { speed: 0 });
+                  _self.currentAction = "";
+                }
+
+                if (!($("#upPressed").is(':hidden'))) {
+                  g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
+                  _self.currentAction = "up";
+                }
+
+                if (!($("#downPressed").is(':hidden'))) {
+                  g_client.sendCmd('move', { x: 0, y: 1, speed: 5 });
+                  _self.currentAction = "down";
+                }
+
+                if (!($("#leftPressed").is(':hidden'))) {
+                  g_client.sendCmd('move', { x: -1, y: 0, speed: 5 });
+                  _self.currentAction = "left";
+                }
+
+                if (!($("#rightPressed").is(':hidden'))) {
+                  g_client.sendCmd('move', { x: 1, y: 0, speed: 5 });
+                  _self.currentAction = "right";
+                }
+
            //     $('.arrowHover').each(function () {$(this).hide()});
 
 
-                g_client.sendCmd('stop', { speed: 0 });
+                //g_client.sendCmd('stop', { speed: 0 });
             });
         }
 
