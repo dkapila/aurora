@@ -1,5 +1,9 @@
 "use strict";
 
+//disable right click
+document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
+
+
 var main = function(GameClient, Misc, MobileHacks) {
     var g_client;
     var Game = (function () {
@@ -54,48 +58,67 @@ var main = function(GameClient, Misc, MobileHacks) {
 
     var GameControls = (function () {
         function GameControls() {
+          var lastButton = null;
         }
 
         GameControls.prototype.attachUpEvent = function () {
           var _self = this;
-            $("#up").on( "vmousedown", function () {
+            $("#up").on( "touchstart vmousedown", function () {
                 $("#upPressed").show();
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
+
+                _self.lastButton = $("#up");
             });
         };
 
         GameControls.prototype.attachDownEvent = function () {
             var _self = this;
-            $("#down").on( "vmousedown", function () {
+            $("#down").on( "touchstart vmousedown", function () {
                 $("#downPressed").show();
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
+
+                _self.lastButton = $("#down");
             });
         };
 
         GameControls.prototype.attachLeftEvent = function () {
             var _self = this;
-            $("#left").on( "vmousedown", function () {
+            $("#left").on( "touchstart vmousedown", function () {
                 $("#leftPressed").show();
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
+
+                _self.lastButton = $("#left");
             });
         };
 
         GameControls.prototype.attachRightEvent = function () {
             var _self = this;
-            $("#right").on( "vmousedown", function () {
+            $("#right").on( "touchstart vmousedown", function () {
                 $("#rightPressed").show();
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
+
+                _self.lastButton = $("#right");
             });
         };
 
         GameControls.prototype.attachStopEvent = function () {
-            $("#outerGamePad").on( "vmouseup", function () {
-                $('.arrowHover').each(function () {$(this).hide()});
-                g_client.sendCmd('stop', { speed: 0 });
+          var _self = this;
+            $("#outerGamePad").on( "vmouseup", function (event) {
+
+                $("#outerGamePad #" + event.target.id).hide();
+
+                if (_self.lastButton) {
+                  if (event.target.id === _self.lastButton.attr('id') || 
+                      event.target.id === _self.lastButton.attr('id') + "Pressed") {
+                    g_client.sendCmd('stop', { speed: 0 });
+                  }
+                }
+                //$('.arrowHover').each(function () {$(this).hide()});
+
             });
         }
 
