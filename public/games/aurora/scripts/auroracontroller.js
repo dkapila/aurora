@@ -34,8 +34,8 @@ var main = function(GameClient, Misc, MobileHacks) {
         });
 
         this.addListner ('connect', function () {
-          $("#gamePadWheel").show();
-          $("#loadingPannel").hide();
+          $("#loadingPannel").fadeOut();
+          $("#gamePadWheel").fadeIn();
           console.log ("player connected");
         });
 
