@@ -21,9 +21,16 @@ var main = function(GameClient, Misc, MobileHacks) {
         var winnerBackgroundColor = data.color.toString(16);
         $('body').css("backgroundColor", "#" + winnerBackgroundColor);
         $('body').css('background-image', 'none');
-        document.getElementById("audioControl").play();
+        playVictorySound();
         console.log ('You won'  + data);
     });
+
+
+    /* code from http://docs.webplatform.org/wiki/tutorials/intro_web_audio_api_1 */
+    function playVictorySound () {
+        var sound = new Sound();
+        sound.startSound("assets/horse.ogg");
+    }
 
   // Insert your controller specific code here.
     console.log("INIT CONTROLLER");
