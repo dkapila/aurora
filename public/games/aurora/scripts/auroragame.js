@@ -49,6 +49,7 @@ requirejs([
     }
 
     function create () {
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.image(0, 0, 'playfield');
         playerManager.createGroup();
@@ -63,6 +64,7 @@ requirejs([
             var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
             startTween.onComplete.add(function () {
                 AUR.state = 'PLAY';
+                game.scale.startFullScreen();
             });
         });
 
