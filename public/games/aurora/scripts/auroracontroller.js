@@ -52,7 +52,6 @@ var main = function(GameClient, Misc, MobileHacks) {
 
     var GameControls = (function () {
         function GameControls() {
-          this.speechRecognition = null;
         }
 
         GameControls.prototype.attachUpEvent = function () {
@@ -90,23 +89,6 @@ var main = function(GameClient, Misc, MobileHacks) {
             });
         }
 
-        GameControls.prototype.attachMicrophoneEvent = function () {
-          $("#mic").on ("vmousedown", function () {
-          });
-
-          $("#mic").on("vmouseup", function () {
-          });
-        }
-
-        GameControls.prototype.addMicrophone = function () {
-          //this.speechRecognition = new webkitSpeechRecognition();
-          if (!this.speechRecognition) {
-            return;
-          }
-          $("#mic").fadeIn();
-          this.attachMicrophoneEvent();
-        }
-
 
         GameControls.prototype.attachGameControls = function () {
             this.attachUpEvent();
@@ -114,7 +96,6 @@ var main = function(GameClient, Misc, MobileHacks) {
             this.attachLeftEvent();
             this.attachRightEvent();
             this.attachStopEvent();
-            this.addMicrophone();
         };
         return GameControls;
     })();
