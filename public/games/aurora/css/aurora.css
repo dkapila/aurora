@@ -9,6 +9,10 @@ body {
   height: 100%;
 }
 
+#victoryPannel {
+  display: none: 
+}
+
 #left {
   background-image: url('../assets/img/leftArrow.png');
   top: 80px;
