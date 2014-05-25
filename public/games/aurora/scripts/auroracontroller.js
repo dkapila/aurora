@@ -3,8 +3,11 @@
 var main = function(GameClient, Misc, MobileHacks) {
     var g_client;
     var Game = (function () {
-      function Game (gameControls) {
+      function Game (gameControls, sound) {
+        this.sound = sound;
         this.gameControls = gameControls;
+        this.gameControls.sound = sound;
+        this.speechRecognition = null;
       }
 
       Game.prototype.initialize = function () {
@@ -16,19 +19,19 @@ var main = function(GameClient, Misc, MobileHacks) {
           Misc.applyUrlSettings(globals);
           MobileHacks.fixHeightHack();        
       }
-      
+
       Game.prototype.addListner = function (listner, callback) {
           g_client.addEventListener(listner, callback);
       } 
 
-      Game.prototype.end = function () {
+      Game.prototype.end = function (data) {
           var winnerBackgroundColor = data.color.toString(16);
           $('body').css("backgroundColor", "#" + winnerBackgroundColor);
           $('body').css('background-image', 'none');
           $("#outerGamePad").hide();
-          $("#victoryPannel").show();      
-          var sound = new Sound();
-          sound.startSound("assets/horse.ogg");
+          var victoryPannel = document.getElementById("victoryPannel");
+          victoryPannel.style.display = "flex";
+          new Sound().startSound("assets/winning.mp3", true);
       }
 
       Game.prototype.start = function () {
@@ -54,30 +57,38 @@ var main = function(GameClient, Misc, MobileHacks) {
         }
 
         GameControls.prototype.attachUpEvent = function () {
+          var _self = this;
             $("#up").on( "vmousedown", function () {
                 $("#upPressed").show();
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
+                _self.sound.startSound("assets/button.mp3");
             });
         };
 
         GameControls.prototype.attachDownEvent = function () {
+            var _self = this;
             $("#down").on( "vmousedown", function () {
                 $("#downPressed").show();
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
+                _self.sound.startSound("assets/button.mp3");
             });
         };
 
         GameControls.prototype.attachLeftEvent = function () {
+            var _self = this;
             $("#left").on( "vmousedown", function () {
                 $("#leftPressed").show();
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
+                _self.sound.startSound("assets/button.mp3");
             });
         };
 
         GameControls.prototype.attachRightEvent = function () {
+            var _self = this;
             $("#right").on( "vmousedown", function () {
                 $("#rightPressed").show();
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
+                _self.sound.startSound("assets/button.mp3");
             });
         };
 
@@ -87,6 +98,7 @@ var main = function(GameClient, Misc, MobileHacks) {
                 g_client.sendCmd('stop', { speed: 0 });
             });
         }
+
 
         GameControls.prototype.attachGameControls = function () {
             this.attachUpEvent();
@@ -98,7 +110,7 @@ var main = function(GameClient, Misc, MobileHacks) {
         return GameControls;
     })();
 
-    var game = new Game(new GameControls());
+    var game = new Game(new GameControls(), new Sound());
     game.start();
 };
 
