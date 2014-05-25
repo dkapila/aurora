@@ -59,7 +59,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachUpEvent = function () {
           var _self = this;
-            $("#up").on( "vmousedown", function () {
+            $("#up").on( "touchstart vmousedown", function () {
                 $("#upPressed").show();
                 g_client.sendCmd('move', { x: 0, y: -1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
@@ -70,7 +70,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachDownEvent = function () {
             var _self = this;
-            $("#down").on( "vmousedown", function () {
+            $("#down").on( "touchstart vmousedown", function () {
                 $("#downPressed").show();
                 g_client.sendCmd('move', {x: 0, y: 1, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
@@ -81,7 +81,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachLeftEvent = function () {
             var _self = this;
-            $("#left").on( "vmousedown", function () {
+            $("#left").on( "touchstart vmousedown", function () {
                 $("#leftPressed").show();
                 g_client.sendCmd('move', {x: -1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
@@ -92,7 +92,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
         GameControls.prototype.attachRightEvent = function () {
             var _self = this;
-            $("#right").on( "vmousedown", function () {
+            $("#right").on( "touchstart vmousedown", function () {
                 $("#rightPressed").show();
                 g_client.sendCmd('move', {x: 1, y: 0, speed: 5 });
                 _self.sound.startSound("assets/button.mp3");
@@ -102,8 +102,14 @@ var main = function(GameClient, Misc, MobileHacks) {
         };
 
         GameControls.prototype.attachStopEvent = function () {
-            $("#outerGamePad").on( "vmouseup", function (event) {
-                $('.arrowHover').each(function () {$(this).hide()});
+            $("#outerGamePad").on( "touchend vmouseup", function (event) {
+                $("#" + event.target.id + "Pressed").hide();
+                if (event.target.id.slice(-7) === "Pressed") {
+                    $("#" + event.target.id).hide();
+                }
+           //     $('.arrowHover').each(function () {$(this).hide()});
+
+
                 g_client.sendCmd('stop', { speed: 0 });
             });
         }
