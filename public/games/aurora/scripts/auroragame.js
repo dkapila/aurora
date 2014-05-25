@@ -49,20 +49,25 @@ requirejs([
     }
 
     function create () {
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.image(0, 0, 'playfield');
         playerManager.createGroup();
         playerManager.createText();
+        vfx.createClouds();
 
         var startButton = game.add.sprite(game.world.centerX, game.world.centerY, 'startButton');
         startButton.anchor.set(0.5);
+        startButton.scale.set(1.5);
         startButton.inputEnabled = true;
         startButton.events.onInputUp.add(function () {
             var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
             startTween.onComplete.add(function () {
                 AUR.state = 'PLAY';
+                game.scale.startFullScreen();
             });
         });
+
 
     }
 
