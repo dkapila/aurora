@@ -48,6 +48,10 @@ var main = function(GameClient, Misc, MobileHacks) {
         });
 
         this.addListner('winner', this.end);
+
+        this.addListner('disconnect', function () {
+            alert ("You cannot connect. Please try next game :)");
+        });
       }
       return Game;
     })();
