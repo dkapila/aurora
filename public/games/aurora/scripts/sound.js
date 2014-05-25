@@ -1,21 +1,24 @@
 function Sound () {
   this.arraybuffer = null;
-    try {
-      window.context = new webkitAudioContext();
-    }
-    catch(e) {
-    } 
+  if (!window.context) {
+      try {
+        window.context = new webkitAudioContext();
+      }
+      catch(e) {
+      }     
+  }
 };
 
-Sound.prototype.playSound = function (audioBuffer) {
+Sound.prototype.playSound = function (audioBuffer, repeat) {
     var source = null;
     source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
+    source.loop = repeat;
     source.start();
 }
 
-Sound.prototype.startSound = function (url) {
+Sound.prototype.startSound = function (url, repeat) {
     var myAudioBuffer = null;
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
@@ -23,7 +26,7 @@ Sound.prototype.startSound = function (url) {
     request.onload = function() {
       context.decodeAudioData(request.response, function(buffer) {
         myAudioBuffer = buffer;
-          (new Sound).playSound(myAudioBuffer);
+          (new Sound).playSound(myAudioBuffer, repeat);
       });
     }
     request.send();
