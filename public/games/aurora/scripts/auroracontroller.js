@@ -5,6 +5,7 @@ var main = function(GameClient, Misc, MobileHacks) {
     var Game = (function () {
       function Game (gameControls) {
         this.gameControls = gameControls;
+        this.speechRecognition = null;
       }
 
       Game.prototype.initialize = function () {
@@ -16,7 +17,7 @@ var main = function(GameClient, Misc, MobileHacks) {
           Misc.applyUrlSettings(globals);
           MobileHacks.fixHeightHack();        
       }
-      
+
       Game.prototype.addListner = function (listner, callback) {
           g_client.addEventListener(listner, callback);
       } 
@@ -51,6 +52,7 @@ var main = function(GameClient, Misc, MobileHacks) {
 
     var GameControls = (function () {
         function GameControls() {
+          this.speechRecognition = null;
         }
 
         GameControls.prototype.attachUpEvent = function () {
@@ -88,12 +90,31 @@ var main = function(GameClient, Misc, MobileHacks) {
             });
         }
 
+        GameControls.prototype.attachMicrophoneEvent = function () {
+          $("#mic").on ("vmousedown", function () {
+          });
+
+          $("#mic").on("vmouseup", function () {
+          });
+        }
+
+        GameControls.prototype.addMicrophone = function () {
+          this.speechRecognition = new webkitSpeechRecognition();
+          if (!this.speechRecognition) {
+            return;
+          }
+          $("#mic").fadeIn();
+          this.attachMicrophoneEvent();
+        }
+
+
         GameControls.prototype.attachGameControls = function () {
             this.attachUpEvent();
             this.attachDownEvent();
             this.attachLeftEvent();
             this.attachRightEvent();
             this.attachStopEvent();
+            this.addMicrophone();
         };
         return GameControls;
     })();
