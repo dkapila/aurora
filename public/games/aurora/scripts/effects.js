@@ -29,13 +29,15 @@ define(['./settings'], function (Settings) {
     };
 
     Effects.prototype.winners = function(p1, p2) {
-        winnerText = game.add.text(game.world.centerX, 140, "WINNERS!");
+        AUR.credits.bringToTop();
+
+        winnerText = game.add.text(game.world.centerX / 2, 140, "WINNERS!");
         winnerText.anchor.set(0.5);
         winnerText.align = 'center';
 
         winnerText.font = 'Arial';
         winnerText.fontWeight = 'bold';
-        winnerText.fontSize = 100;
+        winnerText.fontSize = 70;
         winnerText.fill = '#ffffff';
 
         game.add.tween(winnerText.scale).to({ 'x': 1.3, 'y': 1.3 }, 300, Phaser.Easing.Cubic.In, true, 0, Number.MAX_VALUE, true);
@@ -48,8 +50,17 @@ define(['./settings'], function (Settings) {
         winnerSprite.animations.play('idle');
         winnerSprite.body.velocity.x = 0;
         winnerSprite.body.velocity.y = 0;
-        game.add.tween(winnerSprite).to({ 'x': game.world.centerX, 'y': game.world.centerY }, 2000, Phaser.Easing.Cubic.Out, true);
+        winnerSprite.z = -10000;
+
+        game.add.tween(winnerSprite).to({ 'x': game.world.centerX / 2, 'y': game.world.centerY }, 2000, Phaser.Easing.Cubic.Out, true);
         game.add.tween(winnerSprite.scale).to({ 'x': 3, 'y': 3 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
+
+        game.add.tween(AUR.credits).to({ 'alpha': 1 }, 2000, Phaser.Easing.Quadratic.In, true);
+
+        winnerSprite.bringToTop();
+
+        var winnerGroup = game.add.group();
+        winnerGroup.add(winnerSprite);
 
         sound.play('winning');
     };

@@ -45,6 +45,7 @@ requirejs([
         game.load.image('logo', 'assets/img/logo.png');
         game.load.image('exit', 'assets/img/exit.png');
         game.load.image('startButton', 'assets/img/guiStartButton.png');
+        game.load.image('credits', 'assets/img/credits.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
 
         // audio
@@ -89,6 +90,8 @@ requirejs([
             });
         });
 
+        AUR.credits = game.add.sprite(0, 0, 'credits');
+        AUR.credits.alpha = 0;
 
     }
 
