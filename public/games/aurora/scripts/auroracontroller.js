@@ -99,7 +99,7 @@ var main = function(GameClient, Misc, MobileHacks) {
         }
 
         GameControls.prototype.addMicrophone = function () {
-          this.speechRecognition = new webkitSpeechRecognition();
+          //this.speechRecognition = new webkitSpeechRecognition();
           if (!this.speechRecognition) {
             return;
           }
