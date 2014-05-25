@@ -50,23 +50,19 @@ define(['./settings', './map'], function (Settings, Map) {
                 self.queue.splice(index, 1);
             }
             netPlayer.removeAllListeners();
-            var player = self.players[id];
+            var player = self.players[netPlayer.id];
             console.log(self.players);
             if (!player) return;
 
             player.left = true;
             if (self.players[player.pair].left) {
-                console.log('REMOVING PLAYERS ' + player.id + ' AND ' + player.pair);
+                console.log('REMOVING PLAYERS ' + netPlayer.id + ' AND ' + player.pair);
                 // remove the 2 sprites
                 player.sprite.destroy();
                 self.players[player.pair].sprite.destroy();
-                delete self.players[player.id];
+                delete self.players[netPlayer.id];
                 delete self.players[player.pair];
             }
-            console.log('player disconnected');
-            // console.log(player);
-            console.log('players');
-            // console.log(self.players);
         });
 
         netPlayer.addEventListener('move', function (data) {
