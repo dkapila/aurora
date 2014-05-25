@@ -33,6 +33,9 @@ define(['./settings', './map'], function (Settings, Map) {
         nbText.fontWeight = 'bold';
         nbText.fontSize = 50;
         nbText.fill = '#ffffff';
+
+        // beat it
+        game.add.tween(nbText.scale).to({ 'x': 1.3, 'y': 1.3 }, 200, Phaser.Easing.Cubic.In, true, 0, Number.MAX_VALUE, true);
     };
 
     PlayerManager.prototype.add = function(netPlayer) {
@@ -72,8 +75,8 @@ define(['./settings', './map'], function (Settings, Map) {
             if (!player || player.winner) return;
 
             var sprite = player.sprite;
-            sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
-            sprite.body.velocity.y = data.y * data.speed * Settings.SPEED;
+            if (data.x != 0) sprite.body.velocity.x = data.x * data.speed * Settings.SPEED;
+            if (data.y != 0) sprite.body.velocity.y = data.y * data.speed * Settings.SPEED;
             sprite.animations.play('run');
         });
 

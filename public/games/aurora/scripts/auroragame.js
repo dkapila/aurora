@@ -42,9 +42,7 @@ requirejs([
         game.stage.disableVisibilityChange = true;
 
         game.load.image('playfield', 'assets/img/playfield.png');
-        game.load.image('white', 'assets/img/white.png');
-        game.load.image('red', 'assets/img/red.png');
-        game.load.image('blue', 'assets/img/blue.png');
+        game.load.image('logo', 'assets/img/logo.png');
         game.load.image('exit', 'assets/img/exit.png');
         game.load.image('startButton', 'assets/img/guiStartButton.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
@@ -55,6 +53,7 @@ requirejs([
         game.load.audio('hit04', ['assets/sound/hit04.mp3']);
         game.load.audio('merge01', ['assets/sound/merge01.mp3']);
         game.load.audio('winning', ['assets/sound/winning.mp3']);
+        game.load.audio('music', ['assets/sound/music.mp3']);
     }
 
     function create () {
@@ -62,23 +61,31 @@ requirejs([
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.image(0, 0, 'playfield');
         playerManager.createGroup();
-        playerManager.createText();
         vfx.createClouds();
+        playerManager.createText();
 
-        sound.loadSounds('hit02', false);
-        sound.loadSounds('hit03', false);
-        sound.loadSounds('hit04', false);
-        sound.loadSounds('merge01', false);
-        sound.loadSounds('winning', true);
+        sound.loadSounds('hit02', 1, false);
+        sound.loadSounds('hit03', 1, false);
+        sound.loadSounds('hit04', 1, false);
+        sound.loadSounds('merge01', 1, false);
+        sound.loadSounds('winning', 1, true);
+        sound.loadSounds('music', 0.5, true);
 
-        var startButton = game.add.sprite(game.world.centerX, game.world.centerY, 'startButton');
+        sound.play('music');
+
+        var logo = game.add.sprite(game.world.centerX, 240, 'logo');
+        logo.anchor.set(0.5);
+        logo.scale.set(0.8);
+
+        var startButton = game.add.sprite(game.world.centerX, game.world.centerY + 160, 'startButton');
         startButton.anchor.set(0.5);
-        startButton.scale.set(1.5);
         startButton.inputEnabled = true;
         startButton.events.onInputUp.add(function () {
-            var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
+            var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 600, Phaser.Easing.Quadratic.In, true);
+            var logoTween = game.add.tween(logo).to({ 'alpha': 0 }, 600, Phaser.Easing.Quadratic.In, true);
             startTween.onComplete.add(function () {
                 AUR.state = 'PLAY';
+                logo.alpha = 0;
             });
         });
 

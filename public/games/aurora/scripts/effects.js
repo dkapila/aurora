@@ -29,17 +29,16 @@ define(['./settings'], function (Settings) {
     };
 
     Effects.prototype.winners = function(p1, p2) {
-
-        // TEXT
-        var offsetY = 100;
-        winnerText = game.add.text(game.world.centerX, offsetY, "WINNERS!");
+        winnerText = game.add.text(game.world.centerX, 140, "WINNERS!");
         winnerText.anchor.set(0.5);
         winnerText.align = 'center';
 
         winnerText.font = 'Arial';
         winnerText.fontWeight = 'bold';
-        winnerText.fontSize = 70;
+        winnerText.fontSize = 100;
         winnerText.fill = '#ffffff';
+
+        game.add.tween(winnerText.scale).to({ 'x': 1.3, 'y': 1.3 }, 300, Phaser.Easing.Cubic.In, true, 0, Number.MAX_VALUE, true);
 
         // move winner to the middle, disable control by removing listeners
         if (!p1 && !p2) return;

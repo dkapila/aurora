@@ -9,8 +9,8 @@ define(['./settings'], function (Settings) {
         game = g;
     }
 
-    SoundManager.prototype.loadSounds = function(name, loop) {
-        sounds[name] = game.add.audio(name, 1, loop);
+    SoundManager.prototype.loadSounds = function(name, volume, loop) {
+        sounds[name] = game.add.audio(name, volume, loop);
     };
 
     SoundManager.prototype.play = function(name) {
