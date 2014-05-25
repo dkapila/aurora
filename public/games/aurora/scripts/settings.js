@@ -3,11 +3,12 @@
 define(function () {
 
 	var Settings = {
+		'WIDTH': 1280,
+		'HEIGHT': 720,
 		'SPEED': 40,
 		'MERGE_DIST': 90,
 		'WIN_DIST': 60,
-		'INNER_MARGIN': 40,
-		'OUTER_MARGIN': 80,
+		'MARGIN': 60,
 		'COLOR_RANGE': {
 			'START': 0,
 			'END': 16777215
