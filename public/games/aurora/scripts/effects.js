@@ -49,7 +49,7 @@ define(['./settings'], function (Settings) {
         winnerSprite.animations.play('idle');
         winnerSprite.body.velocity.x = 0;
         winnerSprite.body.velocity.y = 0;
-        game.add.tween(winnerSprite).to({ 'x': game.world.centerX, 'y': game.world.centerY }, 1000, Phaser.Easing.Cubic.Out, true, 1000);
+        game.add.tween(winnerSprite).to({ 'x': game.world.centerX, 'y': game.world.centerY }, 2000, Phaser.Easing.Cubic.Out, true);
         game.add.tween(winnerSprite.scale).to({ 'x': 3, 'y': 3 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
 
         sound.play('winning');

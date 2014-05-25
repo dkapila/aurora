@@ -193,7 +193,7 @@ define(['./settings', './map'], function (Settings, Map) {
                 merge.chain(scale);
                 merge.start();
 
-                map.generateExit();
+                map.generateExit(p1.sprite);
             }
 
         }
