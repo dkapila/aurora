@@ -57,7 +57,10 @@ requirejs([
         startButton.anchor.set(0.5);
         startButton.inputEnabled = true;
         startButton.events.onInputUp.add(function () {
-            game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
+            var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
+            startTween.onComplete.add(function () {
+                AUR.state = 'PLAY';
+            });
         });
 
     }

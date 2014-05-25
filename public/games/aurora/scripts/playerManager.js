@@ -48,8 +48,8 @@ define(['./settings', './map'], function (Settings, Map) {
             if (self.players[player.pair].left) {
                 console.log('REMOVING PLAYERS ' + player.id + ' AND ' + player.pair);
                 // remove the 2 sprites
-                player.sprite.kill();
-                self.players[player.pair].sprite.kill();
+                player.sprite.destroy();
+                self.players[player.pair].sprite.destroy();
                 delete self.players[player.id];
                 delete self.players[player.pair];
             }
@@ -60,6 +60,7 @@ define(['./settings', './map'], function (Settings, Map) {
         });
 
         netPlayer.addEventListener('move', function (data) {
+            if (AUR.state !== 'PLAY') return;
             // console.log('move: ' + JSON.stringify(data));
             var player = self.players[netPlayer.id];
             if (!player || player.winner) return;
@@ -71,6 +72,8 @@ define(['./settings', './map'], function (Settings, Map) {
         });
 
         netPlayer.addEventListener('stop', function (data) {
+            if (AUR.state !== 'PLAY') return;
+
             // console.log('stop: ' + JSON.stringify(data));
             var player = self.players[netPlayer.id];
             if (!player) return;
@@ -89,8 +92,8 @@ define(['./settings', './map'], function (Settings, Map) {
             p2 = this.queue.shift(),
             tint = game.rnd.integerInRange(Settings.COLOR_RANGE.START, Settings.COLOR_RANGE.END);
 
-        this.setupPlayer(p1, p2, 'player', tint);
-        this.setupPlayer(p2, p1, 'player', tint);
+        this.setupPlayer(p1, p2, tint);
+        this.setupPlayer(p2, p1, tint);
 
         // console.log(this.players);
     };
@@ -99,7 +102,11 @@ define(['./settings', './map'], function (Settings, Map) {
         this.sprites = game.add.group();
     };
 
-    PlayerManager.prototype.setupPlayer = function (p1, p2, sprite, tint) {
+    PlayerManager.prototype.togglePlayers = function(enable) {
+        this.sprites.setAll('alpha', enable ? 1 : 0);
+    };
+
+    PlayerManager.prototype.setupPlayer = function (p1, p2, tint) {
         if (!this.sprites) return;
 
         var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
@@ -134,6 +141,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
     PlayerManager.prototype.update = function() {
 
+        this.togglePlayers(AUR.state === 'PLAY');
+
         nbText.setText(Object.keys(this.players).length + this.queue.length);
 
         game.physics.arcade.collide(this.sprites);
@@ -154,7 +163,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
                 (function (playerToRemove, playerToMergeWith) {
                     scale.onComplete.add(function () {
-                        playerToRemove.sprite.kill();
+                        playerToRemove.sprite.destroy();
                         playerToRemove.sprite = playerToMergeWith.sprite;
                         playerToMergeWith.sprite.scale.x = 1.5;
                         playerToMergeWith.sprite.scale.y = 1.5;
@@ -172,7 +181,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
         if (winners.p1 || winners.p2) {
             vfx.winners(p1, p2);
-            console.log('WINNERS!');
+            this.sprites.setAll('body.velocity.x', 0);
+            this.sprites.setAll('body.velocity.y', 0);
         }
 
     };
