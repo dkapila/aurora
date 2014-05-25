@@ -32,10 +32,6 @@ var main = function(GameClient, Misc, MobileHacks) {
         sound.startSound("assets/horse.ogg");
     }
 
-  // Insert your controller specific code here.
-    console.log("INIT CONTROLLER");
-
-
     var GameControls = (function () {
         function GameControls() {
         }

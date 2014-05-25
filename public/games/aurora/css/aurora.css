@@ -60,6 +60,14 @@ body {
   left: 80px;
 }
 
+#startButton {
+  background-image: url('../assets/img/startButton.png');
+}
+
+#startButtonPressed {
+  background-image: url('../assets/img/startButtonPressed.png');
+}
+
 .ui-page {
   height: 100%;
 }
@@ -73,7 +81,7 @@ body {
 /* vertical and horizontal centering
 http://stackoverflow.com/questions/17213113/vertical-centering-flexbox-overlay-in-ios-safari
 */
-#outerGamePad {
+.outerWrapper {
   display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
   display: -ms-flexbox; /* TWEENER - IE 10 */
@@ -93,9 +101,7 @@ http://stackoverflow.com/questions/17213113/vertical-centering-flexbox-overlay-i
   box-sizing: border-box;
 }
 
-#gamePadWheel {
-    min-height: 10px;
-    min-width: 10px;
+.innerWrapper {
     margin: auto;
     position: relative;
 }
