@@ -2,18 +2,21 @@
 
 var main = function(GameClient, Misc, MobileHacks) {
     var g_client;
-
-    var globals = {
-        debug: false,
-    };
-
-    Misc.applyUrlSettings(globals);
-    MobileHacks.fixHeightHack();    
-
     var Game = (function () {
-      function Game () {
+      function Game (gameControls) {
+        this.gameControls = gameControls;
       }
 
+      Game.prototype.initialize = function () {
+          this.gameControls.attachGameControls();
+          var globals = {
+              debug: false,
+          };
+
+          Misc.applyUrlSettings(globals);
+          MobileHacks.fixHeightHack();        
+      }
+      
       Game.prototype.addListner = function (listner, callback) {
           g_client.addEventListener(listner, callback);
       } 
@@ -29,6 +32,8 @@ var main = function(GameClient, Misc, MobileHacks) {
       }
 
       Game.prototype.start = function () {
+        this.initialize();
+
         g_client = new GameClient({
             gameId: "aurora",
         });
@@ -43,9 +48,6 @@ var main = function(GameClient, Misc, MobileHacks) {
       }
       return Game;
     })();
-
-    var game = new Game();
-    game.start();
 
     var GameControls = (function () {
         function GameControls() {
@@ -96,8 +98,8 @@ var main = function(GameClient, Misc, MobileHacks) {
         return GameControls;
     })();
 
-    var gameControls = new GameControls();
-    gameControls.attachGameControls();
+    var game = new Game(new GameControls());
+    game.start();
 };
 
 // Start the main app logic.
