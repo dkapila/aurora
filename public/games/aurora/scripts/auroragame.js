@@ -16,8 +16,8 @@ requirejs([
     var game = new Phaser.Game(Settings.WIDTH, Settings.HEIGHT, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update, render: render}),
         sound = new SoundManager(game),
         vfx = new Effects(game, sound),
-        speech = new SpeechMode(game),
         playerManager = new PlayerManager(game, vfx, sound),
+        speech = new SpeechMode(game, playerManager),
         red;
 
     var globals = {
@@ -47,6 +47,7 @@ requirejs([
         game.load.image('logo', 'assets/img/logo.png');
         game.load.image('startButton', 'assets/img/guiStartButton.png');
         game.load.image('credits', 'assets/img/credits.png');
+        game.load.image('wall', 'assets/img/wall.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
 
         // audio
@@ -95,7 +96,7 @@ requirejs([
         AUR.credits.alpha = 0;
 
         // SPEECH!
-        // speech.defineListeners();
+        if (Settings.ENABLE_SPEECH) speech.defineListeners();
 
     }
 

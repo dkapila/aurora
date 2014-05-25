@@ -109,6 +109,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
     PlayerManager.prototype.createGroup = function() {
         this.sprites = game.add.group();
+        this.walls = game.add.group();
     };
 
     PlayerManager.prototype.togglePlayers = function(enable) {
@@ -166,6 +167,12 @@ define(['./settings', './map'], function (Settings, Map) {
             if (p && p.pair != second.pid) sound.play('hit0' + game.rnd.integerInRange(2, 4));
         }, null, this);
 
+        game.physics.arcade.collide(this.sprites, this.walls, function (player, wall) {
+           // TODO
+        }, null, this);
+
+
+
         if (AUR.state != 'PLAY') return;
 
         for (var p in this.players) {
@@ -217,6 +224,9 @@ define(['./settings', './map'], function (Settings, Map) {
             game.debug.body(this.players[p].sprite);
         }
 
+        this.walls.forEach(function (wall) {
+            game.debug.body(wall);
+        }.bind(this));
     };
 
     return PlayerManager;

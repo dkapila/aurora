@@ -13,7 +13,9 @@ define(function () {
 			'START': 0,
 			'END': 16777215
 		},
-		'MAX_PLAYERS': 20
+		'MAX_PLAYERS': 20,
+		'ENABLE_SPEECH': false,
+		'MAGIC': "test"
 	};
 
 	return Settings;
