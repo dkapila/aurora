@@ -43,6 +43,7 @@ requirejs([
         game.load.image('red', 'assets/img/red.png');
         game.load.image('blue', 'assets/img/blue.png');
         game.load.image('exit', 'assets/img/exit.png');
+        game.load.image('startButton', 'assets/img/guiStartButton.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
     }
 
@@ -50,6 +51,14 @@ requirejs([
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.image(0, 0, 'playfield');
         playerManager.createGroup();
+        playerManager.createText();
+
+        var startButton = game.add.sprite(game.world.centerX, game.world.centerY, 'startButton');
+        startButton.anchor.set(0.5);
+        startButton.inputEnabled = true;
+        startButton.events.onInputUp.add(function () {
+            game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
+        });
 
     }
 

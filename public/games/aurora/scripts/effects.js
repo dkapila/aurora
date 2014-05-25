@@ -3,8 +3,7 @@
 define(['./settings'], function (Settings) {
 
     var game,
-        winnerText,
-        winnerTextReflect;
+        winnerText;
 
     var Effects = function (g) {
         game = g;
@@ -14,7 +13,7 @@ define(['./settings'], function (Settings) {
 
         // TEXT
         var offsetY = 100;
-        winnerText = game.add.text(game.world.centerX, offsetY, "- WINNERS -");
+        winnerText = game.add.text(game.world.centerX, offsetY, "WINNERS!");
         winnerText.anchor.set(0.5);
         winnerText.align = 'center';
 
@@ -22,23 +21,6 @@ define(['./settings'], function (Settings) {
         winnerText.fontWeight = 'bold';
         winnerText.fontSize = 70;
         winnerText.fill = '#ffffff';
-
-        winnerTextReflect = game.add.text(game.world.centerX, offsetY + 50, "- WINNERS -");
-
-        winnerTextReflect.anchor.set(0.5);
-        winnerTextReflect.align = 'center';
-        winnerTextReflect.scale.y = -1;
-
-        winnerTextReflect.font = 'Arial';
-        winnerTextReflect.fontWeight = 'bold';
-        winnerTextReflect.fontSize = 70;
-
-        var grd = winnerTextReflect.context.createLinearGradient(0, 0, 0, winnerText.canvas.height);
-
-        grd.addColorStop(0, 'rgba(255,255,255,0)');
-        grd.addColorStop(1, 'rgba(255,255,255,0.38)');
-
-        winnerTextReflect.fill = grd;
 
         // move winner to the middle, disable control by removing listeners
         if (!p1 && !p2) return;

@@ -4,7 +4,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
     var game,
         map,
-        vfx;
+        vfx,
+        nbText;
 
     var PlayerManager = function (g, effects) {
         game = g;
@@ -12,8 +13,18 @@ define(['./settings', './map'], function (Settings, Map) {
         map = this.map = new Map(game);
         this.queue = [];
         this.players = {};
-
     }
+
+    PlayerManager.prototype.createText = function() {
+        nbText = game.add.text(50, 50, 0);
+        nbText.anchor.set(0.5);
+        nbText.align = 'center';
+
+        nbText.font = 'Arial';
+        nbText.fontWeight = 'bold';
+        nbText.fontSize = 50;
+        nbText.fill = '#ffffff';
+    };
 
     PlayerManager.prototype.add = function(netPlayer) {
         var self = this,
@@ -122,6 +133,9 @@ define(['./settings', './map'], function (Settings, Map) {
     }
 
     PlayerManager.prototype.update = function() {
+
+        nbText.setText(Object.keys(this.players).length + this.queue.length);
+
         game.physics.arcade.collide(this.sprites);
 
         for (var p in this.players) {
