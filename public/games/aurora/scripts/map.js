@@ -15,20 +15,25 @@ define(['./settings'], function (Settings) {
     }
 
     Map.prototype.generateExit = function(sprite) {
-        if (this.exit) return;
-        spots.sort(function (b, a) {
-            return game.physics.arcade.distanceBetween(sprite, { x: a[0], y: a[1] }) - game.physics.arcade.distanceBetween(sprite, { x: b[0], y: b[1] });
-        });
-        var spot = spots[Math.random() > 0.5 ? 0 : 1];
+        if (this.exitTriggered) return;
+        this.exitTriggered = true;
 
-        this.exit = game.add.sprite(spot[0], spot[1], 'spritesheet', 'portal0001-idle.png');
-        game.add.tween(this.exit.scale).to({ 'x': 1.5, 'y': 1.5 }, 500, Phaser.Easing.Cubic.In, true, 0, 1000, true);
+        setTimeout(function () {
+            spots.sort(function (b, a) {
+                return game.physics.arcade.distanceBetween(sprite, { x: a[0], y: a[1] }) - game.physics.arcade.distanceBetween(sprite, { x: b[0], y: b[1] });
+            });
+            var spot = spots[Math.random() > 0.5 ? 0 : 1];
+            this.exit = game.add.sprite(spot[0], spot[1], 'spritesheet', 'portal0001-idle.png');
+            game.add.tween(this.exit.scale).to({ 'x': 1.5, 'y': 1.5 }, 500, Phaser.Easing.Cubic.In, true, 0, 1000, true);
 
-        this.exit.anchor.x = 0.5;
-        this.exit.anchor.y = 0.5;
+            this.exit.anchor.x = 0.5;
+            this.exit.anchor.y = 0.5;
+        }.bind(this), Settings.PORTAL_DELAY);
     };
 
     Map.prototype.checkForWinners = function(players) {
+        if (!this.exit) return;
+
         for (var p in players) {
             var p1 = players[p],
                 p2 = players[p1.pair];

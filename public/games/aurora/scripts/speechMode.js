@@ -27,7 +27,7 @@ define(['./settings'], function (Settings) {
           alert('can not start webkitSpeechRecognition');
         } else {
             this.recognition = new webkitSpeechRecognition();
-            this.recognition.continuous = true;
+            this.recognition.continuous = false;
             this.recognition.interimResults = false;
         }
 

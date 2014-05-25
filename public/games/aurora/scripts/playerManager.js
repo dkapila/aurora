@@ -9,10 +9,10 @@ define(['./settings', './map'], function (Settings, Map) {
         nbText;
 
     var spawns = [
-        [100, 100],
+        [200, 200],
         // [50, Settings.HEIGHT - 50],
         // [Settings.WIDTH, 50],
-        [Settings.WIDTH - 100, Settings.HEIGHT - 100]
+        [Settings.WIDTH - 200, Settings.HEIGHT - 200]
     ];
 
     var PlayerManager = function (g, effects, s) {
@@ -42,9 +42,12 @@ define(['./settings', './map'], function (Settings, Map) {
         var self = this,
             id = netPlayer.id;
 
-        this.queue.push(netPlayer);
-
-        console.log('player connected');
+        if (Object.keys(this.players).length < 24) {
+            this.queue.push(netPlayer);
+        } else {
+            netPlayer.sendCmd('disconnect', {'message': 'too many players!'});
+            return;
+        }
 
         netPlayer.addEventListener('disconnect', function () {
             console.log('player disconnected');
@@ -120,7 +123,7 @@ define(['./settings', './map'], function (Settings, Map) {
         if (!this.sprites) return;
 
         // var sprite = this.sprites.create(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height), 'spritesheet', 'player0001-idle.png');
-        var sprite = this.sprites.create(game.rnd.integerInRange(pos[0] - 50, pos[0] + 50), game.rnd.integerInRange(pos[1] - 50, pos[1] + 50), 'spritesheet', 'player0001-idle.png');
+        var sprite = this.sprites.create(game.rnd.integerInRange(pos[0] - 100, pos[0] + 100), game.rnd.integerInRange(pos[1] - 100, pos[1] + 100), 'spritesheet', 'player0001-idle.png');
 
         // animation
         sprite.animations.add('idle', Phaser.Animation.generateFrameNames('player', 1, 4, '-idle.png', 4), 7, true);
@@ -168,7 +171,12 @@ define(['./settings', './map'], function (Settings, Map) {
         }, null, this);
 
         game.physics.arcade.collide(this.sprites, this.walls, function (player, wall) {
-           // TODO
+            if (wall.alpha == 0) {
+                var show = game.add.tween(wall).to({ 'alpha': 1 }, 300, Phaser.Easing.Cubic.In);
+                var hide = game.add.tween(wall).to({ 'alpha': 0 }, 300, Phaser.Easing.Cubic.Out);
+                show.chain(hide);
+                show.start();
+            }
         }, null, this);
 
 
@@ -210,7 +218,7 @@ define(['./settings', './map'], function (Settings, Map) {
 
         var winners = map.checkForWinners(this.players);
 
-        if (winners.p1 || winners.p2) {
+        if (winners && (winners.p1 || winners.p2)) {
             AUR.state = 'END';
             vfx.winners(winners.p1, winners.p2);
             this.sprites.setAll('body.velocity.x', 0);

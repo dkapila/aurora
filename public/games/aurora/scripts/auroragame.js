@@ -56,7 +56,7 @@ requirejs([
         game.load.audio('hit04', ['assets/sound/hit04.mp3']);
         game.load.audio('merge01', ['assets/sound/merge01.mp3']);
         game.load.audio('winning', ['assets/sound/winning.mp3']);
-        game.load.audio('music', ['assets/sound/music.mp3']);
+        game.load.audio('music', ['assets/sound/music01_short.mp3']);
     }
 
     function create () {

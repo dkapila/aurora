@@ -6,6 +6,7 @@ define(function () {
 		'WIDTH': 1280,
 		'HEIGHT': 720,
 		'SPEED': 40,
+		'PORTAL_DELAY': 10000,
 		'MERGE_DIST': 90,
 		'WIN_DIST': 60,
 		'MARGIN': 60,
@@ -14,8 +15,8 @@ define(function () {
 			'END': 16777215
 		},
 		'MAX_PLAYERS': 20,
-		'ENABLE_SPEECH': false,
-		'MAGIC': "test"
+		'ENABLE_SPEECH': true,
+		'MAGIC': "invisible"
 	};
 
 	return Settings;
