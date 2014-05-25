@@ -9,12 +9,14 @@ requirejs([
     './playerManager',
     './effects',
     './settings',
-    './soundManager'
-], function (GameServer, GameSupport, Misc, PlayerManager, Effects, Settings, SoundManager) {
+    './soundManager',
+    './speechMode'
+], function (GameServer, GameSupport, Misc, PlayerManager, Effects, Settings, SoundManager, SpeechMode) {
 
     var game = new Phaser.Game(Settings.WIDTH, Settings.HEIGHT, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update, render: render}),
         sound = new SoundManager(game),
         vfx = new Effects(game, sound),
+        speech = new SpeechMode(game),
         playerManager = new PlayerManager(game, vfx, sound),
         red;
 
@@ -43,7 +45,6 @@ requirejs([
 
         game.load.image('playfield', 'assets/img/playfield.png');
         game.load.image('logo', 'assets/img/logo.png');
-        game.load.image('exit', 'assets/img/exit.png');
         game.load.image('startButton', 'assets/img/guiStartButton.png');
         game.load.image('credits', 'assets/img/credits.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
@@ -92,6 +93,9 @@ requirejs([
 
         AUR.credits = game.add.sprite(0, 0, 'credits');
         AUR.credits.alpha = 0;
+
+        // SPEECH!
+        // speech.defineListeners();
 
     }
 
