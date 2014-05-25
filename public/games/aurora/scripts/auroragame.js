@@ -7,10 +7,11 @@ requirejs([
     '../libs/gamesupport',
     '../libs/misc',
     './playerManager',
-    './effects'
-], function (GameServer, GameSupport, Misc, PlayerManager, Effects) {
+    './effects',
+    './settings'
+], function (GameServer, GameSupport, Misc, PlayerManager, Effects, Settings) {
 
-    var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update, render: render}),
+    var game = new Phaser.Game(Settings.WIDTH, Settings.HEIGHT, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update, render: render}),
         vfx = new Effects(game),
         playerManager = new PlayerManager(game, vfx),
         red;
