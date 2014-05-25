@@ -102,14 +102,9 @@ var main = function(GameClient, Misc, MobileHacks) {
         };
 
         GameControls.prototype.attachStopEvent = function () {
-          var _self = this;
             $("#outerGamePad").on( "vmouseup", function (event) {
-
-                if (event.target.id === _self.lastAction + "Pressed") {
-                  $("#" + _self.lastAction + "Pressed").hide();
-                  g_client.sendCmd('stop', { speed: 0 });
-                }
-               // $('.arrowHover').each(function () {$(this).hide()});
+                $('.arrowHover').each(function () {$(this).hide()});
+                g_client.sendCmd('stop', { speed: 0 });
             });
         }
 
