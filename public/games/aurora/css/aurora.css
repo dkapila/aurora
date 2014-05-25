@@ -18,17 +18,6 @@ body {
   display: none;
 }
 
-#mic {
-  display: none;
-  background-image: url('../assets/img/mic.png');
-  top: 96px;
-  left: 95px;
-  z-index: 43232;
-  height: 62px;
-  width: 62px;
-  position: absolute;
-}
-
 #left {
   background-image: url('../assets/img/leftArrow.png');
   top: 80px;
