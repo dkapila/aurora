@@ -15,7 +15,7 @@ Sound.prototype.playSound = function (audioBuffer, repeat) {
     source.buffer = audioBuffer;
     source.connect(context.destination);
     source.loop = repeat;
-    source.start();
+    source.start(0);
 }
 
 Sound.prototype.startSound = function (url, repeat) {
