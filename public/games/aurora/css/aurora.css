@@ -9,8 +9,13 @@ body {
   height: 100%;
 }
 
+
+#gamePadWheel {
+  display: none;
+}
+
 #victoryPannel {
-  display: none: 
+  display: none;
 }
 
 #left {

@@ -6,32 +6,46 @@ var main = function(GameClient, Misc, MobileHacks) {
     var globals = {
         debug: false,
     };
+
     Misc.applyUrlSettings(globals);
-    MobileHacks.fixHeightHack();
+    MobileHacks.fixHeightHack();    
 
-    g_client = new GameClient({
-        gameId: "aurora",
-    });
+    var Game = (function () {
+      function Game () {
+      }
 
-    g_client.addEventListener('connect', function() {
-      console.log('Player connected!');
-    });
+      Game.prototype.addListner = function (listner, callback) {
+          g_client.addEventListener(listner, callback);
+      } 
 
-    g_client.addEventListener('winner', function (data) {
-        var winnerBackgroundColor = data.color.toString(16);
-        $('body').css("backgroundColor", "#" + winnerBackgroundColor);
-        $('body').css('background-image', 'none');
-        $("#outerGamePad").hide();
-        $("#victoryPannel").show();
-        playVictorySound();      
-    });
+      Game.prototype.end = function () {
+          var winnerBackgroundColor = data.color.toString(16);
+          $('body').css("backgroundColor", "#" + winnerBackgroundColor);
+          $('body').css('background-image', 'none');
+          $("#outerGamePad").hide();
+          $("#victoryPannel").show();      
+          var sound = new Sound();
+          sound.startSound("assets/horse.ogg");
+      }
 
+      Game.prototype.start = function () {
+        g_client = new GameClient({
+            gameId: "aurora",
+        });
 
-    /* code from http://docs.webplatform.org/wiki/tutorials/intro_web_audio_api_1 */
-    function playVictorySound () {
-        var sound = new Sound();
-        sound.startSound("assets/horse.ogg");
-    }
+        this.addListner ('connect', function () {
+          $("#gamePadWheel").show();
+          $("#loadingPannel").hide();
+          console.log ("player connected");
+        });
+
+        this.addListner('winner', this.end);
+      }
+      return Game;
+    })();
+
+    var game = new Game();
+    game.start();
 
     var GameControls = (function () {
         function GameControls() {
@@ -72,7 +86,7 @@ var main = function(GameClient, Misc, MobileHacks) {
             });
         }
 
-        GameControls.prototype.start = function () {
+        GameControls.prototype.attachGameControls = function () {
             this.attachUpEvent();
             this.attachDownEvent();
             this.attachLeftEvent();
@@ -83,7 +97,7 @@ var main = function(GameClient, Misc, MobileHacks) {
     })();
 
     var gameControls = new GameControls();
-    gameControls.start();
+    gameControls.attachGameControls();
 };
 
 // Start the main app logic.
