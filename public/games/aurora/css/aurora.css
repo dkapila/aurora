@@ -12,21 +12,21 @@ body {
 #left {
   background-image: url('../assets/img/leftArrow.png');
   top: 80px;
-  left: 0px;
+  left: -18px;
 }
 #right {
   background-image: url('../assets/img/rightArrow.png');
   top: 80px;
-  left: 165px;
+  left: 183px;
 }
 #up {
   background-image: url('../assets/img/upArrow.png');
-  top: -6px;
+  top: -24px;
   left: 80px;
 }
 #down {
   background-image: url('../assets/img/downArrow.png');
-  top: 165px;
+  top: 183px;
   left: 80px;
 }
 
@@ -41,22 +41,22 @@ body {
 #leftPressed {
   background-image: url('../assets/img/leftArrowPressed.png');
   top: 80px;
-  left: 0px;
+  left: -18px;
 }
 #rightPressed {
   background-image: url('../assets/img/rightArrowPressed.png');
   top: 80px;
-  left: 165px;
+  left: 183px;
 }
 #upPressed {
   background-image: url('../assets/img/upArrowPressed.png');
-  top: -6px;
+  top: -24px;
   left: 80px;
 }
 
 #downPressed {
   background-image: url('../assets/img/downArrowPressed.png');
-  top: 165px;
+  top: 183px;
   left: 80px;
 }
 
