@@ -3,12 +3,14 @@
 define(['./settings'], function (Settings) {
 
     var game,
+        sound,
         winnerText,
         emitter,
         clouds = [];
 
-    var Effects = function (g) {
+    var Effects = function (g, s) {
         game = g;
+        sound = s;
     }
 
     Effects.prototype.createClouds = function() {
@@ -50,6 +52,7 @@ define(['./settings'], function (Settings) {
         game.add.tween(winnerSprite).to({ 'x': game.world.centerX, 'y': game.world.centerY }, 1000, Phaser.Easing.Cubic.Out, true, 1000);
         game.add.tween(winnerSprite.scale).to({ 'x': 3, 'y': 3 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
 
+        sound.play('winning');
     };
 
     Effects.prototype.update = function() {

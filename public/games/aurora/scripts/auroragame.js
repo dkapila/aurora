@@ -8,12 +8,14 @@ requirejs([
     '../libs/misc',
     './playerManager',
     './effects',
-    './settings'
-], function (GameServer, GameSupport, Misc, PlayerManager, Effects, Settings) {
+    './settings',
+    './soundManager'
+], function (GameServer, GameSupport, Misc, PlayerManager, Effects, Settings, SoundManager) {
 
     var game = new Phaser.Game(Settings.WIDTH, Settings.HEIGHT, Phaser.AUTO, 'phaser-example', {preload: preload, create: create, update: update, render: render}),
-        vfx = new Effects(game),
-        playerManager = new PlayerManager(game, vfx),
+        sound = new SoundManager(game),
+        vfx = new Effects(game, sound),
+        playerManager = new PlayerManager(game, vfx, sound),
         red;
 
     var globals = {
@@ -46,6 +48,13 @@ requirejs([
         game.load.image('exit', 'assets/img/exit.png');
         game.load.image('startButton', 'assets/img/guiStartButton.png');
         game.load.atlas('spritesheet', 'assets/img/spritesheet.png', 'assets/img/spritesheet.json');
+
+        // audio
+        game.load.audio('hit02', ['assets/sound/hit02.mp3']);
+        game.load.audio('hit03', ['assets/sound/hit03.mp3']);
+        game.load.audio('hit04', ['assets/sound/hit04.mp3']);
+        game.load.audio('merge01', ['assets/sound/merge01.mp3']);
+        game.load.audio('winning', ['assets/sound/winning.mp3']);
     }
 
     function create () {
@@ -56,6 +65,12 @@ requirejs([
         playerManager.createText();
         vfx.createClouds();
 
+        sound.loadSounds('hit02', false);
+        sound.loadSounds('hit03', false);
+        sound.loadSounds('hit04', false);
+        sound.loadSounds('merge01', false);
+        sound.loadSounds('winning', true);
+
         var startButton = game.add.sprite(game.world.centerX, game.world.centerY, 'startButton');
         startButton.anchor.set(0.5);
         startButton.scale.set(1.5);
@@ -64,7 +79,6 @@ requirejs([
             var startTween = game.add.tween(startButton).to({ 'alpha': 0 }, 400, Phaser.Easing.Quadratic.Out, true);
             startTween.onComplete.add(function () {
                 AUR.state = 'PLAY';
-                game.scale.startFullScreen();
             });
         });
 

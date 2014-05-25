@@ -5,11 +5,13 @@ define(['./settings', './map'], function (Settings, Map) {
     var game,
         map,
         vfx,
+        sound,
         nbText;
 
-    var PlayerManager = function (g, effects) {
+    var PlayerManager = function (g, effects, s) {
         game = g;
         vfx = effects;
+        sound = s;
         map = this.map = new Map(game);
         this.queue = [];
         this.players = {};
@@ -125,6 +127,8 @@ define(['./settings', './map'], function (Settings, Map) {
             'conn': p1
         };
 
+        sprite.pid = p1.id;
+
         sprite.anchor.x = 0.5;
         sprite.anchor.y = 0.5;
 
@@ -140,12 +144,14 @@ define(['./settings', './map'], function (Settings, Map) {
     }
 
     PlayerManager.prototype.update = function() {
-
         this.togglePlayers(AUR.state === 'PLAY');
 
         nbText.setText(Object.keys(this.players).length + this.queue.length);
 
-        game.physics.arcade.collide(this.sprites);
+        game.physics.arcade.collide(this.sprites, this.sprites, function (first, second) {
+            var p = this.players[first.pid];
+            if (p && p.pair != second.pid) sound.play('hit0' + game.rnd.integerInRange(2, 4));
+        }, null, this);
 
         for (var p in this.players) {
             var p1 = this.players[p],
@@ -155,6 +161,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
             if (!p1.merged && game.physics.arcade.distanceBetween(p1.sprite, p2.sprite) < Settings.MERGE_DIST) {
                 p1.merged = p2.merged = true;
+
+                sound.play('merge01');
 
                 var merge = game.add.tween(p2.sprite);
                 merge.to({ 'x': p1.sprite.x, 'y': p1.sprite.y }, 200, Phaser.Easing.Quadratic.In);
