@@ -131,6 +131,8 @@ define(['./settings', './map'], function (Settings, Map) {
 
         sprite.anchor.x = 0.5;
         sprite.anchor.y = 0.5;
+        sprite.scale.x = 0.75;
+        sprite.scale.y = 0.75;
 
         sprite.body.setSize(46, 116 / 2, 0, 116 / 4);
         sprite.body.collideWorldBounds = true;
@@ -144,7 +146,10 @@ define(['./settings', './map'], function (Settings, Map) {
     }
 
     PlayerManager.prototype.update = function() {
-        this.togglePlayers(AUR.state === 'PLAY');
+        var n = Object.keys(this.players).length,
+            scale = Math.max(0.5, (20 - n / 2) / 20);
+
+        this.togglePlayers(AUR.state === 'PLAY' || AUR.state === 'END');
 
         nbText.setText(Object.keys(this.players).length + this.queue.length);
 
@@ -167,14 +172,14 @@ define(['./settings', './map'], function (Settings, Map) {
                 var merge = game.add.tween(p2.sprite);
                 merge.to({ 'x': p1.sprite.x, 'y': p1.sprite.y }, 200, Phaser.Easing.Quadratic.In);
 
-                var scale = game.add.tween(p2.sprite.scale).to({x: 2, y: 2}, 100, Phaser.Easing.Quadratic.Out);
+                var scale = game.add.tween(p2.sprite.scale).to({x: 1.5, y: 1.5}, 100, Phaser.Easing.Quadratic.Out);
 
                 (function (playerToRemove, playerToMergeWith) {
                     scale.onComplete.add(function () {
                         playerToRemove.sprite.destroy();
                         playerToRemove.sprite = playerToMergeWith.sprite;
-                        playerToMergeWith.sprite.scale.x = 1.5;
-                        playerToMergeWith.sprite.scale.y = 1.5;
+                        playerToMergeWith.sprite.scale.x = 1.2;
+                        playerToMergeWith.sprite.scale.y = 1.2;
                     });
                 }(p2, p1));
 
@@ -183,11 +188,13 @@ define(['./settings', './map'], function (Settings, Map) {
 
                 map.generateExit();
             }
+
         }
 
         var winners = map.checkForWinners(this.players);
 
         if (winners.p1 || winners.p2) {
+            AUR.state = 'END';
             vfx.winners(p1, p2);
             this.sprites.setAll('body.velocity.x', 0);
             this.sprites.setAll('body.velocity.y', 0);
