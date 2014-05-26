@@ -1,6 +1,7 @@
-aurora
+Twin Fusion
 ======
 
-An invisibility based game.
+Description and setup instructions coming soon ...
 
-Awesome game.
+Watch a video of the game here:
+[http://www.youtube.com/watch?v=-SOMJZIldHY](http://www.youtube.com/watch?v=-SOMJZIldHY)
