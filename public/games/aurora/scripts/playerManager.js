@@ -50,19 +50,16 @@ define(['./settings', './map'], function (Settings, Map) {
         }
 
         netPlayer.addEventListener('disconnect', function () {
-            console.log('player disconnected');
             var index = self.queue.indexOf(netPlayer);
             if (index > -1) {
                 self.queue.splice(index, 1);
             }
             netPlayer.removeAllListeners();
             var player = self.players[netPlayer.id];
-            console.log(self.players);
             if (!player) return;
 
             player.left = true;
             if (self.players[player.pair].left) {
-                console.log('REMOVING PLAYERS ' + netPlayer.id + ' AND ' + player.pair);
                 // remove the 2 sprites
                 player.sprite.destroy();
                 self.players[player.pair].sprite.destroy();
@@ -73,7 +70,6 @@ define(['./settings', './map'], function (Settings, Map) {
 
         netPlayer.addEventListener('move', function (data) {
             if (AUR.state !== 'PLAY') return;
-            // console.log('move: ' + JSON.stringify(data));
             var player = self.players[netPlayer.id];
             if (!player || player.winner) return;
 
@@ -86,7 +82,6 @@ define(['./settings', './map'], function (Settings, Map) {
         netPlayer.addEventListener('stop', function (data) {
             if (AUR.state !== 'PLAY') return;
 
-            // console.log('stop: ' + JSON.stringify(data));
             var player = self.players[netPlayer.id];
             if (!player) return;
 
@@ -106,8 +101,6 @@ define(['./settings', './map'], function (Settings, Map) {
 
         this.setupPlayer(p1, p2, tint, spawns[0]);
         this.setupPlayer(p2, p1, tint, spawns[1]);
-
-        // console.log(this.players);
     };
 
     PlayerManager.prototype.createGroup = function() {

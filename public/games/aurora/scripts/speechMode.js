@@ -58,7 +58,6 @@ define(['./settings'], function (Settings) {
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
                     var res = event.results[i][0].transcript;
-                    console.log(res);
                     if (res.indexOf(magic) > -1) {
                         self.addWalls();
                     }
@@ -66,7 +65,6 @@ define(['./settings'], function (Settings) {
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
-            // console.log('final_transcript: ' + linebreak(final_transcript) + ',  interim_transcript: ' + linebreak(interim_transcript));
         };
 
         this.recognition.lang = 'en-US';
